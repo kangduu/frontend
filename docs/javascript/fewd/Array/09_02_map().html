@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> map() 映射</title>
+</head>
+<body>
+    <pre>
+        将 调用的数组的每个元素 传递给 指定的函数，并 返回一个数组，这个数组包含该函数的返回值
+    </pre>
+    <script>
+        var arr = [1,3,5];
+        var b= arr.map(function (v) { // 这个函数 应该有 返回值
+            console.log(this)
+            return v-1; // 没有返回值，返回的则是 undefined
+        });
+        console.log(Array.isArray(b));// true
+
+        console.log(b);//[ 0, 2, 4 ]
+        
+        console.log(arr);//[ 1, 3, 5 ]
+
+    </script>
+</body>
+</html>

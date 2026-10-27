@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coupon·优惠券</title>
+  </head>
+  <style>
+    /* 使用 mask 实现 , 默认是平铺的 */
+    .coupon-lr {
+      padding: 20px;
+      border-radius: 4px;
+      -webkit-mask: radial-gradient(circle at 10px, #0000 10px, red 0) -10px;
+    }
+
+    .coupon-four {
+      padding: 10px;
+      -webkit-mask: radial-gradient(circle at 10px 10px, #0000 10px, yellow 0) -10px -10px;
+    }
+
+    .coupon-six {
+      padding: 16px;
+      -webkit-mask: radial-gradient(circle at 10px 10px, #0000 10px, yellow 0) -10px -10px /
+        100% 25%;
+    }
+
+    /*  */
+    .coupon-dot {
+      padding: 20px;
+      -webkit-mask: radial-gradient(circle at 5px, red 5px, #0000 0) -5px 50% / 100%
+          20px,
+        radial-gradient(circle at 20px 20px, #0000 10px, red 0) -20px -20px /
+          50%;
+      -webkit-mask-composite: destination-out;
+      mask-composite: subtract; /*Firefox*/
+    }
+
+    div {
+      width: 500px;
+      height: 120px;
+      background-color: #faa;
+      box-sizing: border-box;
+    }
+
+    p {
+      padding: 0;
+      margin: 0;
+      border: 1px solid #000;
+      height: 100%;
+      text-align: center;
+    }
+  </style>
+  <body>
+    <h2>左右圆角</h2>
+    <div class="coupon-lr">
+      <p>content</p>
+    </div>
+
+    <h2>四个边角</h2>
+    <div class="coupon-four">
+      <p>content</p>
+    </div>
+
+    <h2>六个角(多个圆角)</h2>
+    <div class="coupon-six">
+      <p>修改 [-webkit-mask-size] 值即可</p>
+    </div>
+
+    <h2>反向镂空叠加</h2>
+    <div class="coupon-dot">content</div>
+  </body>
+</html>

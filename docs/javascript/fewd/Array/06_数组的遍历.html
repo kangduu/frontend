@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>遍历数组</title>
+</head>
+<body>
+    <h3>for 循环</h3>
+    <pre>
+    for (var i = 0, len = arr.length; i < len; i++) {
+        //不排除 任何情况
+        }
+    
+    for (var i = 0, len = arr.length; i < len; i++) {       <em>注意：这里的不存在是 属性不存在 </em>
+            if ( <b> !arr[i] </b> )              continue; // 排除null 、undefined和不存在 的情况   <b>代码的严格性 最好是写上这句话</b>
+            if ( <b> arr[i] === undefined </b> ) continue; // 排除undefined和不存在 的情况
+            if ( <b> !(i in arr) </b> )          continue; // 排除不存在 的情况
+        }
+    </pre>
+    <h3>for/in</h3>
+    <pre>
+     var arr = [2, 3, 4, 5, 6, 7];
+        for (var i in arr) {
+            console.log(arr[i])
+        }
+    </pre>
+    <h3>foEach()</h3>
+    <pre>
+        var data = [1, 2, 3, 4, 5];
+        var sumOfSquares = 0;
+        <b>
+        data.forEach(function (x) {
+            sumOfSquares += x*x;
+        });
+        </b>
+        console.log(sumOfSquares)
+    </pre>
+    <script>
+        var data = [1, 2, 3, 4, 5];
+        var sumOfSquares = 0;
+        data.forEach(function (x) {
+            sumOfSquares += x * x;
+        });
+        console.log(sumOfSquares)
+    </script>
+</body>
+</html>

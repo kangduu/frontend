@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> unshift() shift() 首部 增删</title>
+</head>
+<body>
+    <pre>
+        1.unshift()
+            在数组的 首部 添加一个或多个元素，返回 修改后的数组的长度
+        2.shift()
+            删除数组的 第一个 元素，并返回该元素。
+
+        注意： 两个方法都修改替换原始数组
+
+    </pre>
+    <script>
+        var arr = [8,9];
+        
+        //多个一起插入
+        var re = arr.unshift(1,2,2);
+        console.log(arr); // [ 1, 2, 2, 8, 9 ] 修改了原数组
+        console.log(re); // 5 返回的是 数组的长度
+
+        //一个一个插入
+        arr.unshift(1);
+        arr.unshift(2);
+        arr.unshift(2);
+        console.log(arr);//[ 2, 2, 1,  1, 2, 2, 8, 9 ] 注意两种添加排列的顺序
+
+        var re1 = arr.shift();
+        console.log(re1);// 2 返回的是删除的值
+        
+        
+        /**
+         * 利用 shift方法 正向 遍历并清空一个数组 ， 先进先出
+         * */
+        var list = [1,2,3,4,5,6];
+        var item;
+        
+        while (item = list.shift()) {
+            console.log(item); // 1 2 3 4 5 6
+        }
+        console.log(list);//[]
+    </script>
+</body>
+</html>

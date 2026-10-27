@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bind() 方法</title>
+</head>
+<body>
+    <h3>主要作用</h3>
+    <pre>
+    将函数绑定至某个对象(**当又不仅仅是将函数绑定至一个对象**)
+    </pre>
+    
+    <h3>原理</h3>
+    <pre>
+    1、当在函数 f() 上调用 bind() 方法并传入一个对象o作为参数 ，这个方法bind 将返回一个新的函数 g()。
+    2、这个时候调用新的函数g() 将会把原始函数f() 当做 o 的方法来调用。
+    3、并且传入新函数g() 中的任何实参都将原封不动的传入原函数f()
+    </pre>
+    <script>
+        /**
+         *       原理示例
+         * */
+        function f(y) { //待绑定函数
+            return this.x + y
+        }
+        var o = {   //绑定对象
+            x:1
+        };
+        var g = f.bind(o);  //通过调用 g(x)来调用o.f(x)
+        console.log(g(2));
+        
+        
+        /**
+        *       实例
+        * */
+        var hero = {
+            _name: 'John Doe',// 当hero 执行时 ，就会在全局有一个 var name = undefined . 即未经声明的变量就使用
+            getSecretldentity: function () {
+                return this._name
+            }
+        };
+        var stoleSecretldentity = hero.getSecretldentity;//这时hero已执行
+    
+
+        //修复 stoleSecretldentity()函数的一种方法
+        // var stoleSecretldentity = hero.getSecretldentity.bind(hero);
+        console.log(stoleSecretldentity());//undefined  ， 这里是在 window 环境下找 name ，相当于 console.log(window._name);
+        console.log(hero.getSecretldentity());//John Doe
+        
+    </script>
+    
+    <h3>**柯里化**</h3>
+    <pre>
+    除了第一个实参之外，传入bind()的实参也会绑定至this，而这个附带的应用是一种 常见的函数式编程技术（柯里化）。
+    </pre>
+    <script>
+        /**
+         *       函数 柯里化
+         * */
+        var sum = function (x,y) {console.log(x + y)};
+
+        //创建一个类似sum的新函数，但this的值绑定到null
+        //并且第一个参数绑定到1，这个新的函数succ期望只传入一个实参
+        var succ = sum.bind(null,1);
+        succ(2); //3 > x 绑定 1 ，y为传入的实参
+
+        function f1(y,z) {console.log(this.x + y + z)}
+        var g1 = f1.bind({x:1},2);
+        g1(3); //6 > x绑定1 ， y 绑定2 ， z 为传入的实参
+    </script>
+</body>
+</html>

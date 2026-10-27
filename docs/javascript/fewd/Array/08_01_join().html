@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>join() 拼接 原数组元素</title>
+</head>
+<body>
+    <pre>
+        将数组中 所有元素都 转化为字符串 并连接起来，返回最后生成的字符串。
+        
+        var arr = [1,2,3,4,5];
+        var result = arr.join('-'); // 默认使用 逗号
+        console.log(result); //1-2-3-4-5
+        
+        console.log(arr); // [ 1, 2, 3, 4, 5 ] 不改变原数组
+        
+        
+        var arr = [1,2,3,[4,[5],6]]; // 多维数组
+        console.log(arr.join());
+        console.log(arr.toString());
+
+    </pre>
+</body>
+</html>

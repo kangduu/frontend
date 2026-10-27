@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作为数组的字符串</title>
+</head>
+<body>
+    <pre>
+        字符串的行为类似 只读 数组。
+        访问字符串： 1.string.charAt() 2.string[]
+    </pre>
+    <pre>
+        特别的
+        
+        1、字符串是不可变值，当作数组看待时为只读数组
+      * 2、使用数组方法来修改字符串会导致错误：<b>出错的时候没有提示</b>
+    </pre>
+    <script>
+        var str = 'Javascript';
+        console.log(str.charAt(2));// v
+        console.log(str[1]);// a
+
+        //不修改字符串
+        var re=Array.prototype.join.call(str,' ');
+        console.log(re); // J a v a js c r i p t
+
+        //使用数组方法修改字符串
+        var add=Array.prototype.push.call(str,'nice');
+        console.log(add);// TypeError: Cannot assign to read only property 'length' of object '[object String]'
+
+    </script>
+</body>
+</html>

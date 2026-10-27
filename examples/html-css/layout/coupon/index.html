@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coupon·优惠券</title>
+  </head>
+  <style>
+    /* 使用 mask 实现*/
+    .coupon-lr {
+      padding: 10px 20px;
+      border-radius: 4px;
+      -webkit-mask: radial-gradient(circle at 0, #0000 10px, red 0),
+        radial-gradient(circle at right, #0000 10px, red 0);
+      -webkit-mask-composite: source-in; /*chrome*/
+      mask-composite: intersect; /*Firefox*/
+    }
+
+    .coupon-four {
+      padding: 16px;
+      -webkit-mask: radial-gradient(circle at 0 0, #0000 10px, red 0),
+        radial-gradient(circle at right 0, #0000 10px, red 0),
+        radial-gradient(circle at 0 100%, #0000 10px, red 0),
+        radial-gradient(circle at right 100%, #0000 10px, red 0);
+      -webkit-mask-composite: source-in; /*chrome*/
+      mask-composite: intersect; /*Firefox*/
+    }
+
+    div {
+      width: 500px;
+      height: 120px;
+      background-color: #faa;
+      box-sizing: border-box;
+    }
+
+    p {
+      padding: 0;
+      margin: 0;
+      border: 1px solid #000;
+      height: 100%;
+      text-align: center;
+    }
+  </style>
+  <body>
+    <h2>左右圆角</h2>
+    <div class="coupon-lr">
+      <p>content</p>
+    </div>
+
+    <h2>四个边角</h2>
+    <div class="coupon-four">
+      <p>content</p>
+    </div>
+  </body>
+</html>

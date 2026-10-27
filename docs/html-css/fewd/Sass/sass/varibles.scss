@@ -1,0 +1,41 @@
+// 定义全局主题样式，便于提高开发效率，统一代码风格
+
+// 主题色
+$color-theme-red    : #ff3333;
+$color-theme-purple : #ff33a9;
+$color-theme-orange : #ff8833;
+$color-theme-blue   : #3377ff;
+
+
+// 文子颜色
+$color-text-black: #000;
+$color-text-dark : #333;
+$color-text-deep : #555;
+$color-text-pl   : #999999;
+$color-text-weak : #B3B3B3;
+$color-text-white: #fff;
+
+// 背景色
+$color-bg-bar       : #F9F9F9;
+$color-bg-page      : #F3F3F3;
+$color-bg-page-light: #F9F9F9;
+
+// more ...
+
+
+/*
+使用变量之后，sass 文件不会直接生效，至少在 vue 文件 里面是访问不到的。 需要在 vue.config.js 里面增加如下配置。
+
+module.exports= {
+    ...    
+    
+    css: {
+        sourceMap: true,
+        loaderOptions: {
+            sass: {
+                prependData: ` @import "@/assets/styles/variable.scss";`
+            }
+        }
+    }
+}
+*/

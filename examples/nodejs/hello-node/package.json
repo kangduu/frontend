@@ -1,0 +1,16 @@
+{
+  "name": "week01",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc index.ts && node index.js",
+    "test:tsx": "npx tsx demo.cts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.3.0"
+  }
+}

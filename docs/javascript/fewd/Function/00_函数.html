@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数</title>
+</head>
+<body>
+    <script>
+/*
+        var re = 0;
+        for (var i = 0,js = 5;i < 1,js < 9; i++,js++) {
+            re=i+js;
+            console.log(re);//5 7 9 11
+        }
+        console.log(re);//11
+        
+*/
+/*
+    //设计一个函数，计算12+11+...+2+1的结果
+    var temp = 0;
+    
+    function fn1(num) {
+        var count = num;
+        for (var i = 0; i < count; i++) {
+            temp += num;
+            num--;
+            // if (i === 5) {
+            //     return;
+            // }
+        }
+        console.log(temp)
+    }
+    
+    fn1(12);
+    // console.log(temp);
+    
+    
+    */
+
+
+
+
+    /*经典面试题--函数*/
+    debugger;
+    function fun1(n, re) {
+        //var n = 0;
+        console.log(re);
+        return {
+            fun: function (m) {
+                return fun1(m, n);
+            }
+        }
+    }
+    
+    var a = fun1(0);//undefind
+    a.fun(1);//0
+    a.fun(2);//0
+    a.fun(3);//0
+    var b = fun1(0).fun(1).fun(2).fun(3);// undefined 0 1 2
+    var c = fun1(0).fun(1);// undefined 0
+    c.fun(2);// 1
+    c.fun(3);// 1
+    </script>
+
+</body>
+</html>

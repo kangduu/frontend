@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cancel Request</title>
+  </head>
+  <body>
+    <div>
+      <h3>Abort FetchAPI Request</h3>
+      <button type="button" id="fetchRequest">开始请求数据（fetch）</button>
+      <button type="button" id="fetchCancel">取消请求（fetch）</button>
+    </div>
+    <div>
+      <h3>Abort XMLHttpRequest</h3>
+      <button type="button" id="xhrRequest">开始请求数据（XHR）</button>
+      <button type="button" id="xhrCancel">取消请求（XHR）</button>
+    </div>
+
+    <script type="module">
+      import createXHR from "../../utils/xhr.js";
+      import setAbortController from "../../utils/setAbortController.js";
+
+      var url = "http://127.0.0.1:3008/user";
+
+      {
+        var abortFetchRequest;
+        document.getElementById("fetchRequest").addEventListener(
+          "click",
+          function () {
+            var { signal, cancel } = setAbortController();
+            abortFetchRequest = cancel;
+            const http = fetch(url, { signal }).then((res) => {
+              console.log(res);
+              return res.json();
+            });
+            http
+              .then((data) => {
+                console.log("data:", data);
+              })
+              .catch((error) => {
+                if (error.code === 20) {
+                  alert("Fetch Request Aborted!");
+                }
+                console.log("error code:", error.code);
+                console.log("error message:", error.message);
+                console.log("error name:", error.name);
+              });
+          },
+          false
+        );
+
+        document.getElementById("fetchCancel").addEventListener(
+          "click",
+          function () {
+            if (abortFetchRequest instanceof Function) {
+              abortFetchRequest();
+              abortFetchRequest = null;
+            }
+          },
+          false
+        );
+      }
+
+      {
+        var abortXHR;
+        document.getElementById("xhrRequest").addEventListener(
+          "click",
+          function () {
+            var xhr = createXHR();
+            if (xhr) {
+              xhr.onreadystatechange = function () {
+                if (
+                  xhr.readyState === XMLHttpRequest.DONE /* 4 */ &&
+                  xhr.status === 200
+                ) {
+                  var data = JSON.parse(xhr.responseText);
+                  console.log(data);
+                }
+              };
+
+              xhr.open("GET", url);
+
+              abortXHR = function () {
+                xhr.abort();
+              };
+
+              xhr.onabort = function () {
+                //   console.log(xhr.readyState); // 4
+                //   console.log(xhr.status); // 0
+
+                // * 注意这里的readyState值的更新时间
+                // setTimeout(() => {
+                //   console.log(xhr.readyState); // 0
+                //   console.log(xhr.status); // 0
+                // }, 0);
+
+                alert("XMLHttpRequest Aborted!");
+              };
+
+              xhr.send();
+            }
+          },
+          false
+        );
+
+        document.getElementById("xhrCancel").addEventListener(
+          "click",
+          function () {
+            if (abortXHR instanceof Function) {
+              abortXHR();
+              abortXHR = null;
+            }
+          },
+          false
+        );
+      }
+    </script>
+  </body>
+</html>

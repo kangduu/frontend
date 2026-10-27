@@ -1,0 +1,37 @@
+{
+  "name": "practice",
+  "version": "1.0.0",
+  "description": "Organize practice materials for each technology stack.",
+  "main": "index.js",
+  "scripts": {
+    "ts": "tsnd --respawn ./ts/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kangduu/practice.git"
+  },
+  "keywords": [
+    "practice",
+    "js",
+    "ts",
+    "react",
+    "node.js",
+    "webpack",
+    "etc."
+  ],
+  "author": "kanduu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kangduu/practice/issues"
+  },
+  "homepage": "https://github.com/kangduu/practice#readme",
+  "dependencies": {
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

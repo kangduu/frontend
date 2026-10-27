@@ -1,0 +1,14 @@
+<!--index.wxml-->
+<view class="container">
+    <form>
+        <view></view>
+        <button type="primary" bindtap="upload">上传文件</button> 
+    </form>
+    <!-- <image src="{{imgURL}}"></image> -->
+    <picker mode="region">
+        <button type="warn">地区选择</button>
+    </picker>
+    <picker mode="date">
+        <button type="default">日期选择</button>
+    </picker>
+</view>

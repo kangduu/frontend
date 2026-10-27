@@ -1,0 +1,121 @@
+---
+source: "camp/src/README.md"
+home: true
+icon: tabler:home-filled
+title: Home
+heroImage: /assets/coding.gif
+heroImageDark: /assets/coding.gif
+# layout: BlogHome
+# bgImage: /assets/coding.gif
+# heroText: "" # 主标题
+# tagline: "" # 副标题
+# heroImage: /assets/home.gif # logo heroImageDark可设置夜间模式
+# heroFullScreen: true
+
+actions:
+  # - text: 待办事项
+  #   link: /todo/
+  #   icon: solar:checklist-bold
+  #   type: primary
+
+  # - text: 我的收藏
+  #   icon: solar:stars-bold
+  #   link: /favorites/
+  #   type: primary
+
+  # - text: 关于我们
+  #   icon: solar:stars-bold
+  #   link: /intro/
+  #   type: primary
+
+features:
+  - title: JavaScript
+    details: JavaScript相关知识点。如分时函数、高阶函数、惰性加载（不重复判断）、JavaScript循环机制（浏览器）等
+    icon: fa6-brands:square-js
+    link: /js/README.md
+
+  # - title: webpack
+  # details: webpack 是一个用于现代 JavaScript 应用程序的 静态模块打包工具
+  # icon: logos:webpack
+  # link: /webpack
+
+  # - title: browser
+  #   details: Browser相关知识点。如本地缓存、性能测试等
+  #   icon: fa-brands:chrome
+  #   link: /browser
+
+  - title: TypeScript
+    details: TypeScript 是一种强类型的编程语言，基于 JavaScript 构建，无论项目规模如何，都能为你提供更强大的开发工具
+    icon: logos:typescript-icon
+    link: /ts/README.md
+
+  - title: Node
+    details: Node.js 是一个免费、开源、跨平台的 JavaScript 运行时环境，可让开发人员创建服务器、Web 应用程序、命令行工具和脚本。
+    icon: logos:nodejs-icon
+    link: /node/README.md
+
+  # - title: react
+  #   details: 用于构建 Web 和原生交互界面的库
+  #   icon: logos:react
+  #   link: /react
+
+  # - title: Nest
+  #   details: Nest (NestJS) 是一个用于构建高效、可扩展的Node.js服务器端应用程序的框架
+  #   icon: logos:nestjs
+  #   link: /nest
+
+  # - title: Next
+  #   details: Next.js 是一个用于构建全栈 Web 应用程序的 React 框架
+  #   icon: logos:nextjs-icon
+  #   link: /next
+
+  # - title: git
+  #   details: 一个分布式版本控制软件
+  #   icon: logos:git-icon
+  #   link: /git
+
+  - title: AI Engineer
+    details: AI 辅助编码与实践：协作工作流、提示模板与 Cursor 模式速查
+    icon: mingcute:ai-fill
+    link: /ai/README.md
+
+  # - title: shell
+  #   details: Shell 是用户与操作系统交互的桥梁，它接受用户输入的命令并执行
+  #   icon: file-icons:powershell
+  #   link: /shell
+
+  # - title: Linux
+  #   details: Linux是一种自由和开放源码的类UNIX操作系统
+  #   icon: logos:linux-tux
+  #   link: /linux
+
+footer: 路漫漫其修远兮，吾将上下而求索
+---
+---
+
+### :smile:Link Up ~ ~ ~
+
+1. [Developer Roadmaps](https://roadmap.sh/)
+2. [React TypeScript Cheatsheets](https://react-typescript-cheatsheet.netlify.app/)
+
+---
+
+### 本站所使用的资源
+
+- [VuePress](https://vuepress.vuejs.org/)
+- [vuepress-theme-hope](https://theme-hope.vuejs.press/)
+- [Iconify](https://icon-sets.iconify.design/)
+- [FontAwesome](https://fontawesome.com/)
+
+---
+
+### :warning:特别说明
+
+:alarm_clock: 本站的属于个人博客网站，不存在任何商业用途。
+
+本站使用[VuePress](https://vuepress.vuejs.org/) 搭建，主题配置[vuepress-theme-hope](https://theme-hope.vuejs.press/)，特别鸣谢。
+
+本站部分图片等资源均源自互联网，若存在侵权请联系本人删除。
+
+<a>dk6232693@gmail.com</a>
+<a>1365271643@qq.com</a>

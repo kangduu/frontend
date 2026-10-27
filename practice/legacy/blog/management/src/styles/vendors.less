@@ -1,0 +1,44 @@
+// 使用Less的混合（Mixins）技术为应用提供公共变量，类名也可单独使用
+// 所有混合变量统一使用`mx-`打头
+// `mx-aa-nn`形式命名，如：mx-fs-16 表示文字大小16px
+
+// 文本字体大小
+.mx-fs-small {
+    font-size: 14px;
+}
+
+.mx-fs-def {
+    font-size: 18px;
+}
+
+.mx-fs-large {
+    font-size: 24px;
+}
+
+// padding 
+.mx-pd-2vmin {
+    padding: calc(2vmin);
+}
+
+.mx-pd-lr-2vmin {
+    padding: 0 calc(2vmin);
+}
+
+// 边框
+.mx-bd-divider {
+    border-style: solid;
+    border-color: #ddd;
+}
+
+
+// 单行文本超出打点
+.mx-uniline-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// 多行文本超出
+.mx-multiline-ellipsis {
+
+}

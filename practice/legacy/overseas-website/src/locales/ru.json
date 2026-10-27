@@ -1,0 +1,18 @@
+{
+  "translation": {
+    "header": {
+      "home": "дом",
+      "pp": "пп",
+      "fullz": "полный",
+      "ent_message": "энт_сообщение",
+      "other": "Другие",
+      "course": {
+        "__self": "курс",
+        "chrome": "хром печенье",
+        "firefox": "Fire Fox печенье"
+      },
+      "support": "ПОДДЕРЖИВАТЬ"
+    },
+    "message": "я красивый мальчик"
+  }
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>环形队列</title>
+    <style>
+        ul,
+        li {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul {
+            position: relative;
+        }
+
+        .sector {
+            /* 扇形 */
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-top: 100px solid #ddd;
+            border-radius: 50%;
+            display: inline-block;
+            /* position: absolute; */
+        }
+    </style>
+</head>
+
+<body>
+    <p>点击改变当前和下一个兄弟元素的颜色为黑色。</p>
+    <ul class="box">
+        <li class="sector" data-i="0"></li>
+        <li class="sector" data-i="1"></li>
+        <li class="sector" data-i="2"></li>
+        <li class="sector" data-i="3"></li>
+        <li class="sector" data-i="4"></li>
+    </ul>
+
+    <script>
+        let li_arr = document.getElementsByTagName('li'),
+            L = li_arr.length;
+        document.getElementsByClassName('box')[0].addEventListener('click', function (event) {
+            let ev = event || window.event;
+            let target = ev.target || ev.srcElement;
+            if (target.nodeName.toLowerCase() == 'li') {
+                const I = parseInt(target.dataset.i);
+                for (let m = 0; m < li_arr.length; m++) {
+                    const ele = li_arr[m];
+                    ele.style.borderTopColor = '#ddd'
+                }
+                target.style.borderTopColor = 'red';
+                li_arr[(I + 1) % L].style.borderTopColor = '#333'
+            }
+        }, false);
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闭包</title>
+</head>
+<body>
+    <div>
+        <h3>闭包</h3>
+        <pre>
+            定义：多个函数嵌套，当内部函数被保存到外部时，将会生成闭包。
+            
+            问题：闭包会导致原有作用域链不释放，造成内存泄露（过多的占用内存）。
+            
+            注意：并不是只有 return 才能实现闭包
+            
+            作用：
+                1、实现公有变量  -->   eg.函数累加器
+                2、可以做缓存（存储结构）  -->   eg.eater
+                3、可以实现封装，属性私有化  -->   eg.Person()
+                4、模块化开发，防止污染全局变量
+        </pre>
+        <h3>闭包的防范</h3>
+        <pre>
+            闭包会导致多个执行函数共用一个公有变量，如果不是特殊需要，应尽量防止这种情况发生。
+        </pre>
+    </div>
+    
+    <script>
+        /**
+        *       --闭包实现累加器--  accumulation
+        * */
+        function accu() {
+            var num = 0;
+            function acc() {
+                console.log(++num)
+            }
+            return acc;
+        }
+        var myAccu = accu();
+        myAccu();//1
+        myAccu();//2
+        myAccu();//3
+ 
+        /**
+         *       --类似缓存机制--
+         *       多个函数和一个函数形成闭包，可以同时使用函数域中的变量 （一个妈妈多个儿子）
+        * */
+        function food() {
+            var foods = 'apple';
+            var obj = {
+                eatFood: function () {
+                    if (foods != "") {
+                        console.log("I am eating " + food);
+                        foods = ""
+                    }else {
+                        console.log("There is nothing! empty!")
+                    }
+                },
+                pushFood: function (myFood) {
+                    food = myFood;
+                }
+            };
+            return obj
+        }
+        var person = food();
+        person.eatFood();//I am eating apple
+        person.eatFood();//There is nothing! empty!
+        person.pushFood("banana");
+        person.eatFood();//I am eating banana
+        
+        
+        
+        
+  
+    </script>
+</body>
+</html>

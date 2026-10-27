@@ -1,0 +1,11 @@
+{
+  "name": "d3-demo",
+  "version": "1.0.0",
+  "description": "d3 test",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc --watch"
+  },
+  "author": "",
+  "license": "ISC"
+}

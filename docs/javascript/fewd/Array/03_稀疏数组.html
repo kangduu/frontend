@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>稀疏数组</title>
+</head>
+<body>
+    <h1>稀疏数组 - 包括 从0开始的 不连续索引的 数组</h1>
+    
+    <pre>
+        如何产生稀疏数组：
+        
+        1. a = new Array(5);
+        2. a = [] ; // 没有值 也是稀疏
+        3. a = [1,,3] ;
+        4. a[10] = 0; //超出 length
+        5. delete 操作符
+    </pre>
+    <script>
+        let arr1 = new Array(5), arr2 = [];
+        console.log(arr1.length); //5
+        console.log(arr2.length);//0
+        arr2[10] = 0;
+        console.log(arr2.length);//11
+        
+        let arr = ['a',,,4];
+        console.log(arr[0],arr[1],arr[2]); // a undefined undefined
+        console.log(1 in arr); //false 创建一个数组可以用来预分配一个数组空间，但是 数组中没有存储值，这时甚至数组的索引属性“0”，“1”等还未定义。
+        console.log(0 in arr); // true
+        console.log(3 in arr); // true
+    </script>
+</body>
+</html>

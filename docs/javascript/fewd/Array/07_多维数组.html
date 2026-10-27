@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>多维数组</title>
+</head>
+<body>
+  <pre>
+    JS不支持真正的多维数组
+  </pre>
+  <script>
+    /**
+     * 九九乘法表
+    * */
+    var table = new Array(10);
+    //嵌套数组
+    for (var i = 0; i < table.length; i++) {
+        table[i] = new Array(10)
+    }
+    //初始化数组
+    for (var row = 1; row < table.length; row++) {
+        for (var col = 1; col < table[row].length; col++) {
+            table[row][col] = row * col
+        }
+    }
+    console.log(table[1][1]);
+    console.log(table[4][2]);
+    console.log(table[2][5]);
+    console.log(table);
+  </script>
+</body>
+</html>

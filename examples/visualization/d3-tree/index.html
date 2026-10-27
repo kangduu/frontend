@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hierarchy（层级结构）</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <svg id="root"></svg>
+    <div id="tools">
+        <h3>人员层级树</h3>
+        <form action="">
+            <div>
+                <input name=" line" id="curve" type="radio" value="curve">
+                <label for="curve">曲线</label>
+                <input name="line" id="straight" type="radio" value="straight">
+                <label for="straight">直线</label>
+            </div>
+        </form>
+
+        <!-- <button>显示字段</button> -->
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/Mock.js/1.0.1-beta3/mock-min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="index.js"></script>
+    <script>
+        const mockData = {
+            "id": Mock.mock("@guid()"),
+            "name": Mock.mock("@cname()"),
+            "children": [
+                {
+                    "id": Mock.mock("@guid()"),
+                    "name": Mock.mock("@cname()"),
+                    "children": (
+                        new Array(2).fill(1)
+                            .map(() => ({
+                                "id": Mock.mock("@guid()"),
+                                "name": Mock.mock("@cname()"),
+                            }))
+                    )
+                },
+                {
+                    "id": Mock.mock("@guid()"),
+                    "name": Mock.mock("@cname()"),
+                    "children": (
+                        new Array(2).fill(1)
+                            .map(() => ({
+                                "id": Mock.mock("@guid()"),
+                                "name": Mock.mock("@cname()"),
+                                "children": (
+                                    new Array(2).fill(1)
+                                        .map(() => ({
+                                            "id": Mock.mock("@guid()"),
+                                            "name": Mock.mock("@cname()"),
+                                            "children": []
+                                        }))
+                                )
+                            }))
+                    )
+                },
+                {
+                    "id": Mock.mock("@guid()"),
+                    "name": Mock.mock("@cname()"),
+                    "children": (
+                        new Array(2).fill(1)
+                            .map(() => ({
+                                "id": Mock.mock("@guid()"),
+                                "name": Mock.mock("@cname()"),
+                                "children": (
+                                    new Array(1).fill(1)
+                                        .map(() => ({
+                                            "id": Mock.mock("@guid()"),
+                                            "name": Mock.mock("@cname()"),
+                                            "children": []
+                                        }))
+                                )
+                            }))
+                    )
+                }
+            ]
+        }
+
+        const hierarchy = new HierarchyTree({
+            data: mockData
+        })
+
+    </script>
+</body>
+
+</html>

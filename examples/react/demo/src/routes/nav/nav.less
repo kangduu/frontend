@@ -1,0 +1,63 @@
+@nav-height :52px;
+@padding-base: 16px;
+
+#nav {
+    width: 100%;
+    height: @nav-height;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    li {
+        min-width: 80px;
+        height: @nav-height;
+        line-height: @nav-height;
+        padding: 0 @padding-base;
+        cursor: pointer;
+        font-size: 20px;
+        text-align: center;
+        color: #c23564;
+        background-color: #fff;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom: 5px solid transparent;
+        opacity: 0.6;
+        transition: all 0.5s ease;
+
+        &:hover {
+            opacity: 1;
+            background-color: rgba(194, 53, 100, 0.05);
+            border-color: rgba(194, 53, 100, 0.1);
+        }
+
+        &.active {
+            opacity: 1;
+        }
+
+        &:last-of-type {
+            margin-right: 10px;
+        }
+    }
+
+    div.line {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 6px;
+        border-radius: 15px;
+        background-color: #c23564;
+        transition: all 0.3s ease;
+    }
+
+    .profile {
+        flex: 1;
+        margin-left: auto;
+        height: @nav-height;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: @padding-base;
+    }
+}

@@ -1,0 +1,18 @@
+{
+  "translation": {
+    "header": {
+      "home": "HOME",
+      "pp": "PP",
+      "fullz": "FULLZ",
+      "ent_message": "ENT_MESSAGE",
+      "other": "OTHER",
+      "course": {
+        "__self": "COURSE",
+        "chrome": "Chrome Cookies",
+        "firefox": "Firefox Cookies"
+      },
+      "support": "SUPPORT"
+    },
+    "discount": "Buy 1000 items 20% off；700 items 15% off; 500 items 10% off; 100items 5% off."
+  }
+}

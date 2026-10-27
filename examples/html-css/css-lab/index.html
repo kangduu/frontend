@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="通过可复现、可对比的原生 HTML 与 CSS 案例学习 CSS。"
+    />
+    <meta name="theme-color" content="#f7f4ee" />
+    <title>CSS Lab · CSS 学习案例</title>
+    <link rel="stylesheet" href="/src/styles/global.css" />
+    <link rel="stylesheet" href="/src/styles/home.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="./" aria-label="CSS Lab 首页">
+          <span class="brand-mark" aria-hidden="true">{ }</span>
+          <span>CSS Lab</span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="#cases">案例</a>
+          <a href="#method">学习方法</a>
+          <a
+            href="https://github.com/kangduu/css"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+            <span aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Personal CSS Knowledge Base</p>
+            <h1>
+              <span class="hero-line">把每个 CSS 坑，</span>
+              <span class="hero-line">变成一个</span>
+              <span class="hero-accent">可复现的案例。</span>
+            </h1>
+            <p class="hero-lead">
+              从真实现象出发，用最小的 HTML 与 CSS
+              对照问题、理解原理、记录解法。这里不追求背诵属性，而是积累可以随时运行和检查的经验。
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#cases">浏览案例</a>
+              <a
+                class="button button-ghost"
+                href="https://github.com/kangduu/css"
+                target="_blank"
+                rel="noreferrer"
+              >
+                查看源码
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-demo" role="img" aria-label="Flexbox 代码装饰示例">
+            <div class="demo-window">
+              <div class="window-bar">
+                <span></span>
+                <span></span>
+                <span></span>
+                <code>layout.css</code>
+              </div>
+              <pre><code><span class="token-selector">.item</span> {
+  <span class="token-property">flex</span>: <span class="token-value">1</span>;
+  <span class="token-property">min-width</span>: <span class="token-accent">0</span>;
+  <span class="token-property">overflow</span>: <span class="token-value">hidden</span>;
+}</code></pre>
+              <div class="mini-layout" aria-hidden="true">
+                <span class="mini-item">long-content-that-can-shrink</span>
+                <span class="mini-action">Action</span>
+              </div>
+            </div>
+            <span class="floating-note note-one">允许收缩 ✓</span>
+            <span class="floating-note note-two">HTML + CSS</span>
+          </div>
+        </div>
+
+        <div class="container stats" role="group" aria-label="站点内容统计">
+          <div>
+            <strong>01</strong>
+            <span>已整理案例</span>
+          </div>
+          <div>
+            <strong>01</strong>
+            <span>知识分类</span>
+          </div>
+          <div>
+            <strong>0</strong>
+            <span>首版依赖的 CSS 库</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="cases-section" id="cases">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Case Library</p>
+              <h2>案例目录</h2>
+            </div>
+            <p>每个案例都包含现象、对照演示、原理和可直接使用的结论。</p>
+          </div>
+
+          <ul class="category-row" aria-label="案例分类">
+            <li class="category-chip is-active">全部 <b>1</b></li>
+            <li class="category-chip">布局 <b>1</b></li>
+          </ul>
+
+          <article class="case-card">
+            <div class="case-preview" aria-hidden="true">
+              <span class="preview-label">BAD</span>
+              <div class="preview-card preview-bad">
+                <span>device-with-a-very-long-name</span>
+                <b>按钮</b>
+              </div>
+              <span class="preview-label preview-label-good">GOOD</span>
+              <div class="preview-card preview-good">
+                <span>device-with-a-very-long-name</span>
+                <b>按钮</b>
+              </div>
+            </div>
+            <div class="case-content">
+              <div class="case-meta">
+                <span>布局</span>
+                <span>Flexbox</span>
+                <time datetime="2026-07-28">2026.07.28</time>
+              </div>
+              <h3>为什么 <code>min-width: 0</code> 能阻止按钮被挤出？</h3>
+              <p>
+                通过同构对照理解 Flex
+                子项的最小内容宽度，以及长文本、省略号和兄弟元素之间的收缩关系。
+              </p>
+              <div class="case-footer">
+                <span>原生 HTML · CSS · 少量 JS</span>
+                <a href="./cases/layout/flex-min-width-0/">
+                  打开案例
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="method-section" id="method">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Learning Loop</p>
+              <h2>一套可重复的学习方式</h2>
+            </div>
+            <p>把模糊的“CSS 怎么又不对”拆成可以观察和验证的三个步骤。</p>
+          </div>
+
+          <div class="method-grid">
+            <article>
+              <span class="method-number">01</span>
+              <h3>复现现象</h3>
+              <p>抽出最小结构，保留真正影响结果的容器、内容和状态。</p>
+            </article>
+            <article>
+              <span class="method-number">02</span>
+              <h3>建立对照</h3>
+              <p>只改变一个关键条件，让浏览器行为的差异清晰可见。</p>
+            </article>
+            <article>
+              <span class="method-number">03</span>
+              <h3>沉淀规则</h3>
+              <p>记录原理、适用边界和检查顺序，形成下一次能复用的经验。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <a class="brand" href="./">
+          <span class="brand-mark" aria-hidden="true">{ }</span>
+          <span>CSS Lab</span>
+        </a>
+        <p>持续拆解，持续验证，持续积累。</p>
+      </div>
+    </footer>
+  </body>
+</html>

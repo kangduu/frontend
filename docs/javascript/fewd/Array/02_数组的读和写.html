@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组的读写</title>
+</head>
+<body>
+    <h1>读、写语法</h1>
+    <pre>
+        使用 [] 操作符来访问数组中的一个元素。
+        数组的引用位于方括号的左边（即数组名）。
+        方括号中是一个返回 非负整数值 的任意表达式。
+    </pre>
+    <pre>
+        特别的
+        
+        1.数组是对象的特殊形式，（ 使用方括号访问数组元素 === 使用方括号访问对象的属性 ）
+        2.js中将指定的数字索引值转换成字符串，然后将其作为属性名使用
+        3.数组的特别之处是，当使用小于 2^32 的非负整数作为属性名时，数组会 自动维护其length 属性值
+        4.可以使用负数或非整数来索引数组，只是将数值转换为字符串当作属性名使用即可
+    </pre>
+    <pre>
+        越界 ---
+        
+        在 js 中数组没有 “越界”错误的概念，即 读一个不存在的属性时，也不会报错 只会得到 undefined。 对象也如此
+    </pre>
+    <script>
+        let obj = {} , arr = [2,3];
+        console.log(obj['a']); // undefined
+        console.log(arr[4]); // undefined
+        
+        console.log(arr[1]); // 3
+        console.log(arr[1.000]); // 3
+        
+        console.log(arr[1.2]); // undefined
+        console.log(arr[-1]); // undefined
+    </script>
+</body>
+</html>

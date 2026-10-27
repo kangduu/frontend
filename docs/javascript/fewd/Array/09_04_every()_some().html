@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> every() some() 检测</title>
+</head>
+<body>
+    <pre>
+        数组的逻辑判定： 对数组元素应用指定的函数进行判定，返回true 和 false
+        
+        注意：下面两个方法一旦确定返回什么值后就停止遍历数组元素。
+        
+        注意： 对于空数组： every() 返回 true  ；  some() 返回 false
+    </pre>
+    <pre>
+        1、every()
+        当且仅当针对数组中 所有的元素 调用判定函数返回true，该方法就返回true
+    </pre>
+    <pre>
+        2、some()
+        当数组中 至少有一个元素 调用判定函数返回true，该方法就返回true
+    </pre>
+    <script>
+        var arr = [1, 2, 3, 4, 5];
+        var re = arr.every(function (v) {
+            return v < 10
+        });
+        console.log(re); // true
+
+
+        var re2 = arr.some(function (v) {
+            return v % 2 == 0
+        });
+        console.log(re2);// true
+
+        /**
+         *  空数组
+         * */
+        var arr1 = [];
+        console.log(arr1.every(function (v) {}));//true
+        console.log(arr1.some(function (v) {}));//false
+    </script>
+</body>
+</html>

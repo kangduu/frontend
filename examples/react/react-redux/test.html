@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redux</title>
+</head>
+
+<body>
+    <button id="add">加法</button>
+    <button id="subtraction">减法</button>
+    <button id="mul">平方</button>
+    <p id="view"></p>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/redux/4.0.5/redux.js"></script>
+    <script>
+        // redux api
+        console.log("Redux:", Redux);
+        const { createStore, compose, combineReducers, bindActionCreators, applyMiddleware } = Redux;
+
+        let initState = 10
+        // reducers函数
+        const operation = (state = initState, action) => {
+            switch (action.type) {
+                case "ADD":
+                    return state + 1
+                case "SUBTRACTION":
+                    return state - 1
+                default:
+                    return state
+            }
+        }
+        const multiply = (state = initState, action) => {
+            switch (action.type) {
+                case "MUL":
+                    return Math.pow(state, 2)
+                default:
+                    return state
+            }
+        }
+        const reducers = combineReducers({ operation, multiply })
+
+        // 唯一的store
+        const store = createStore(reducers);
+        const { getState, subscribe, dispatch, replaceReducer } = store;
+        console.log("store:", store);
+
+        // 更新dom值
+        const viewEL = document.getElementById("view")
+        function updateValue() {
+            const value = getState()
+            console.log(value);
+            if (viewEL) viewEL.innerText = value
+        }
+
+        // 订阅
+        subscribe(() => {
+            updateValue()
+        })
+
+        // action生成器
+        function createAction(type) {
+            const action = { type }
+            dispatch(action)
+        }
+
+        // 初始值
+        updateValue()
+
+        // 加函数
+        const el = document.getElementById("add")
+        el && el.addEventListener("click", function () {
+            createAction("ADD");
+        }, false);
+
+
+        // 减函数
+        const subELE = document.getElementById("subtraction")
+        subELE && subELE.addEventListener("click", function () {
+            createAction("SUBTRACTION")
+        }, false);
+
+        // 平方
+        const mulELE = document.getElementById("mul")
+        mulELE && mulELE.addEventListener("click", function () {
+            createAction("MUL")
+        }, false);
+
+    </script>
+
+</body>
+
+</html>

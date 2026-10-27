@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Tree</title>
+
+    <style>
+        * {
+            user-select: none;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #tools {
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 10;
+            width: auto;
+            height: auto;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: rgb(205, 50, 50);
+        }
+
+        #tools button {
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        svg {
+            /* border: 1px solid #000; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="tools">
+        <h1>网络传销人员组织树</h1>
+        <div>
+            <button role="button" id="zoom-in">放大</button>
+            <button role="button" id="zoom-out">缩小</button>
+            <button role="button" id="reset">重置</button>
+            <button role="button" id="export">导出</button>
+        </div>
+    </div>
+    <!-- <svg id="org-tree"></svg> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/Mock.js/1.0.1-beta3/mock-min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="../dist/organization/index.js"></script>
+    <script>
+        // 模拟数据
+        let mockData = {
+            "name": Mock.Random.cname(),
+            // "color": Mock.mock('@color'),
+            "children": (new Array(5)).fill(1).map(() => {
+                return {
+                    "name": Mock.Random.cname(),
+                    // "color": Mock.mock('@color'),
+                    "children": (new Array(5)).fill(1).map(() => {
+                        return {
+                            "name": Mock.Random.cname(),
+                            // "color": Mock.mock('@color'),
+                            "children": (new Array(10)).fill(1).map(() => {
+                                return {
+                                    "name": Mock.Random.cname(),
+                                    // "color": Mock.mock('@color'),
+                                    "children": (new Array(10)).fill(1).map(() => {
+                                        return {
+                                            "name": Mock.Random.cname(),
+                                            // "color": Mock.mock('@color'),
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }
+
+
+        // 实例化
+        const tree = new OrgTreeV1.OrgTree('body', mockData)
+
+        // 放大
+        document.getElementById("zoom-in").addEventListener("click", () => {
+            if (tree && tree.enableZoom instanceof Function) { tree.enableZoom(-100) }
+        }, false)
+        // 缩小
+        document.getElementById("zoom-out").addEventListener("click", () => {
+            if (tree && tree.enableZoom instanceof Function) { tree.enableZoom(100) }
+        }, false)
+        // 重置
+        document.getElementById("reset").addEventListener("click", () => {
+            if (tree && tree.reset instanceof Function) tree.reset()
+        }, false)
+
+        // 输出图片
+        document.getElementById("export").addEventListener("click", () => {
+            if (tree && tree.exportingImage instanceof Function) tree.exportingImage()
+        }, false)
+
+
+        // ------------------------- v2 ------------------------
+
+        // const width = document.body.clientWidth;
+        // const margin = { top: 50, right: 120, bottom: 50, left: 120 }
+        // const root = d3.hierarchy(mockData)
+        // const dx = 10, dy = width / (root.height + 1);
+        // const tree = d3.tree().nodeSize([dx, dy])
+        // const diagonal = d3.linkHorizontal().x(d => d.y).y(d => d.x)
+
+        // root.x0 = dy / 2;
+        // root.y0 = 0;
+        // root.descendants().forEach((d, i) => {
+        //     d.id = i;
+        //     d._children = d.children;
+        //     if (d.depth && d.data.name.length !== 7) d.children = null;
+        // });
+
+        // const svg = d3.create("svg")
+        //     .attr("viewBox", [-margin.left, -margin.top, width, dx])
+        //     .style("font", "10px sans-serif")
+        //     .style("user-select", "none");
+
+        // const gLink = svg.append("g")
+        //     .attr("fill", "none")
+        //     .attr("stroke", "#555")
+        //     .attr("stroke-opacity", 0.4)
+        //     .attr("stroke-width", 1.5);
+
+        // const gNode = svg.append("g")
+        //     .attr("cursor", "pointer")
+        //     .attr("pointer-events", "all");
+
+
+        // function update(source) {
+        //     const duration = d3.event && d3.event.altKey ? 2500 : 250;
+        //     const nodes = root.descendants().reverse();
+        //     const links = root.links();
+
+        //     // 计算新的树布局
+        //     tree(root);
+
+        //     let left = root;
+        //     let right = root;
+        //     root.eachBefore(node => {
+        //         if (node.x < left.x) left = node;
+        //         if (node.x > right.x) right = node;
+        //     });
+
+        //     const height = right.x - left.x + margin.top + margin.bottom;
+
+        //     const transition = svg.transition()
+        //         .duration(duration)
+        //         .attr("viewBox", [-margin.left, left.x - margin.top, width, height])
+        //         .tween("resize", window.ResizeObserver ? null : () => () => svg.dispatch("toggle"));
+
+        //     //更新所有的节点
+        //     const node = gNode.selectAll("g")
+        //         .data(nodes, d => d.id);
+
+        //     //在父节点以前的位置输入任何的新节点
+        //     const nodeEnter = node.enter().append("g")
+        //         .attr("transform", d => `translate(${source.y0},${source.x0})`)
+        //         .attr("fill-opacity", 0)
+        //         .attr("stroke-opacity", 0)
+        //         .on("click", (event, d) => {
+        //             d.children = d.children ? null : d._children;
+        //             update(d);
+        //         });
+
+        //     // 设置节点圆
+        //     nodeEnter.append("circle")
+        //         .attr("r", 2.5)
+        //         .attr("fill", d => d._children ? "#555" : "#999")
+        //         .attr("stroke-width", 10);
+
+        //         // 设置文本
+        //     nodeEnter.append("text")
+        //         .attr("dy", "0.31em")
+        //         .attr("x", d => d._children ? -6 : 6)
+        //         .attr("text-anchor", d => d._children ? "end" : "start")
+        //         .text(d => d.data.name)
+        //         .clone(true).lower()
+        //         .attr("stroke-linejoin", "round")
+        //         .attr("stroke-width", 3)
+        //         .attr("stroke", "white");
+
+        //     // 转换节点到新位置
+        //     const nodeUpdate = node.merge(nodeEnter).transition(transition)
+        //         .attr("transform", d => `translate(${d.y},${d.x})`)
+        //         .attr("fill-opacity", 1)
+        //         .attr("stroke-opacity", 1);
+
+        //     // 将退出的节点转换到父节点位置
+        //     const nodeExit = node.exit().transition(transition).remove()
+        //         .attr("transform", d => `translate(${source.y},${source.x})`)
+        //         .attr("fill-opacity", 0)
+        //         .attr("stroke-opacity", 0);
+
+        //     // 更新线
+        //     const link = gLink.selectAll("path")
+        //         .data(links, d => d.target.id);
+
+        //     // Enter 时在父节点前置位置建立一个新的线
+        //     const linkEnter = link.enter().append("path")
+        //         .attr("d", d => {
+        //             const o = { x: source.x0, y: source.y0 };
+        //             return diagonal({ source: o, target: o });
+        //         });
+
+        //     // 为转为新位置添加动画
+        //     link.merge(linkEnter).transition(transition)
+        //         .attr("d", diagonal);
+
+        //     // 将现有节点转换到父节点的新位置
+        //     link.exit().transition(transition).remove()
+        //         .attr("d", d => {
+        //             const o = { x: source.x, y: source.y };
+        //             return diagonal({ source: o, target: o });
+        //         });
+
+        //     // 隐藏旧的位置并转换
+        //     root.eachBefore(d => {
+        //         d.x0 = d.x;
+        //         d.y0 = d.y;
+        //     });
+        // }
+
+        // update(root);
+
+        // document.body.appendChild(svg.node())
+
+
+        // ----------------------- v1 ----------------------
+
+        // const svg = d3.select('svg#org-tree')
+        // const width = +(svg.attr('width'));
+        // const height = +(svg.attr('height'));
+        // const margin = { top: 30, right: 150, bottom: 30, left: 150 }
+        // const innerWidth = width - margin.left - margin.right;
+        // const innerHeight = height - margin.top - margin.bottom;
+        // const g = svg.append('g')
+        //     .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        // let root, color;
+
+        // function fill(d) {
+        //     if (d.depth === 0) {
+        //         return color(d.data.name)
+        //     }
+        //     while (d.depth > 1) {
+        //         d = d.parent;
+        //     }
+        //     return color(d.data.name)
+        // }
+
+        // const render = () => {
+        //     // 颜色设置
+        //     color = d3.scaleOrdinal(d3.schemeCategory10)
+        //     // .domain(root.descendants().filter(d => d.depth <= 1).map(d => d.data.name))
+        //     // .range(d3.schemeCategory10);
+
+        //     // 画线
+        //     g.selectAll('path').data(root.links()).join('path')
+        //         .attr('fill', 'none')
+        //         .attr('stroke', 'black')
+        //         .attr('d', d3.linkHorizontal().x(d => d.y).y(d => d.x))
+
+        //     // 画圆
+        //     g.selectAll('circle').data(root.descendants()).join('circle')
+        //         .attr('cx', d => d.y)
+        //         .attr('cy', d => d.x)
+        //         .attr('fill', fill)
+        //         // .attr('stroke-width', 3)
+        //         .attr('r', 6)
+
+        //     // 文本
+        //     g.selectAll('text').data(root.descendants()).join('text')
+        //         .attr('font-size', '1em')
+        //         .attr('fill', d => d.data.color)
+        //         .attr('text-anchor', d => d.children ? 'end' : 'start')
+        //         .attr('x', d => (d.children ? -6 : +6) + d.y)
+        //         .attr('y', d => d.x + 5)
+        //         .text(d => d.data.name)
+        // }
+
+
+        // // hierarchy 
+        // root = d3.hierarchy(mockData)
+        // // tree()
+        // root = d3.tree().size([innerHeight, innerWidth])(root);
+
+        // render()
+    </script>
+</body>
+
+</html>

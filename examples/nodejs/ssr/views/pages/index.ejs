@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title><%= title %></title>
+    <!-- 引用样式和脚本 -->
+    <!-- 样式文件可直接引用（若使用了 webpack 的 CSS 构建则根据输出路径引用） -->
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
+  </head>
+  <body>
+    <%- include('../partials/header') -%>
+    <h1><%= title %></h1>
+    <ul>
+      <% items.forEach(item => { %>
+      <li><%= item %></li>
+      <% }) %>
+    </ul>
+    <%- include('../partials/footer') -%>
+    <!-- 引用打包后的前端脚本 -->
+    <script src="/js/index.bundle.js"></script>
+  </body>
+</html>

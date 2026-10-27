@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> toString() toLocaleString() </title>
+</head>
+<body>
+    <pre>
+        1.toString()
+            针对数组 将每个元素转换为字符串并且输出用逗号分隔的字符串列表。 与默认情况下的 join（） 一样。
+        2.toLocaleString()
+            数组元素的 字符串方法
+            是 toLocaleString 的本地化版本，使用本地化（和自定义实现的）分隔符。
+    </pre>
+    <script>
+
+        var a= [1,2,3];
+        var re = a.toString();
+        console.log(re);//1,2,3
+        console.log(a);//[ 1, 2, 3 ]
+
+        console.log(typeof a[1]); // number
+        var re1 = a[1].toLocaleString(); //数组元素的toLocaleString()方法
+        console.log(typeof re1); //string
+
+    </script>
+</body>
+</html>

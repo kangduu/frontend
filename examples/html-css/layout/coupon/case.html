@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Case</title>
+    <style>
+      .coupon {
+        width: 450px;
+        height: 180px;
+        background: linear-gradient(to right, #ffc230, #fe6603);
+        border-radius: 10px;
+        box-sizing: border-box;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        -webkit-mask: radial-gradient(circle at right 10px, red 7px, #0000 0)
+            0px 100% / 100% 24.7px,
+          radial-gradient(circle at 160px 10px, #0000 10px, red 0) 0px -10px / 100%;
+        -webkit-mask-composite: destination-out;
+        mask-composite: subtract; /*Firefox*/
+      }
+
+      .price {
+        padding-right: 20px;
+        font-size: 6rem;
+        font-family: "Microsoft YaHei";
+        position: relative;
+        line-height: 1;
+        font-weight: 900;
+        background-image: -webkit-linear-gradient(
+          bottom,
+          #f6ab62,
+          #ffffff 40%,
+          #ffffff 60%,
+          #f6ab62
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .price::after {
+        display: block;
+        content: "¥";
+        position: absolute;
+        left: -28px;
+        bottom: 3px;
+        font-size: 3rem;
+        line-height: 1;
+        font-weight: 500;
+        background-image: -webkit-linear-gradient(
+          bottom,
+          #f6ab62,
+          #ffffff 40%,
+          #ffffff 60%,
+          #f6ab62
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .price::before {
+        display: block;
+        content: "";
+        width: 0;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border-left: 2px dashed rgba(201, 195, 189, 0.8);
+      }
+
+      .note {
+        color: #ffffff;
+        padding: 10px 30px;
+        opacity: 0.9;
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="coupon">
+      <span class="price">30</span>
+      <div class="note">
+        <div style="font-size: 2rem">优惠券</div>
+        <div style="font-size: 1.2rem">满299可使用</div>
+      </div>
+    </div>
+  </body>
+</html>

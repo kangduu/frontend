@@ -1,0 +1,21 @@
+@import "../vendors.less";
+@import "../varibles.less";
+
+#root {
+
+  .app-header {
+    background: #fff;
+    border-bottom: 1px solid @main-bd-color;
+    display: flex;
+    align-items: center;
+    .mx-fs-large();
+    .mx-pd-lr-2vmin()
+  }
+
+  .app-content {
+    height: ~"calc(100vh - 112px - 4vmin)";
+    overflow: hidden;
+    .mx-pd-2vmin();
+  }
+
+}

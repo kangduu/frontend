@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="通过对照演示理解 Flex 布局中 min-width: 0、长文本省略与兄弟元素收缩的关系。"
+    />
+    <meta name="theme-color" content="#f4f7fb" />
+    <title>Flex 布局中 min-width: 0 的作用 · CSS Lab</title>
+    <link rel="stylesheet" href="/src/styles/global.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="case-page">
+    <header class="site-header case-site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../../../" aria-label="返回 CSS Lab 首页">
+          <span class="brand-mark" aria-hidden="true">{ }</span>
+          <span>CSS Lab</span>
+        </a>
+        <nav class="case-nav" aria-label="案例导航">
+          <a href="../../../">案例目录</a>
+          <a
+            href="https://github.com/kangduu/css"
+            target="_blank"
+            rel="noreferrer"
+          >
+            源码
+            <span aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="case-page-main">
+      <div class="case-page-container">
+        <nav class="breadcrumb" aria-label="面包屑">
+          <a href="../../../">首页</a>
+          <span aria-hidden="true">/</span>
+          <span>布局</span>
+          <span aria-hidden="true">/</span>
+          <span>Flexbox</span>
+        </nav>
+
+        <header class="case-hero">
+          <div>
+            <p class="case-eyebrow">CSS Flexbox Case Study · 01</p>
+            <h1><code>min-width: 0</code> 为什么能阻止按钮被挤出？</h1>
+            <p class="case-lead">
+              下面复现预警卡片的底部布局：左侧设备信息占据剩余空间，右侧核实按钮在鼠标移入后展开。
+              两组结构完全相同，唯一关键差异是 Flex 收缩链是否设置
+              <code>min-width: 0</code>。
+            </p>
+            <ul class="case-tags" aria-label="案例标签">
+              <li>布局</li>
+              <li>Flexbox</li>
+              <li>文本溢出</li>
+            </ul>
+          </div>
+          <button
+            class="toggle-button"
+            id="toggleExpansion"
+            type="button"
+            aria-pressed="true"
+            hidden
+          >
+            取消锁定展开
+          </button>
+        </header>
+
+        <section class="comparison" aria-label="min-width 对比演示">
+          <article class="demo-case demo-case-bad">
+            <div class="demo-case-heading">
+              <div>
+                <h2>默认行为</h2>
+                <p>Flex 子项保留默认的最小内容宽度</p>
+              </div>
+              <span class="badge">可能溢出</span>
+            </div>
+
+            <div class="stage">
+              <span class="stage-label">将鼠标移入卡片，观察右侧按钮</span>
+              <div class="boundary" aria-hidden="true"></div>
+              <div class="alert-card force-hover">
+                <div class="alert-title">检测到一条需要核实的预警消息</div>
+                <div class="alert-footer">
+                  <div class="device">
+                    <span class="device-prefix">来自：</span>
+                    <span class="device-icon" aria-hidden="true">▣</span>
+                    <span class="device-name"> device-9f34b72a-prod </span>
+                    <span class="device-time">18:40:02</span>
+                  </div>
+                  <div class="mark-row">
+                    <span class="mark-button">
+                      <span aria-hidden="true">◷</span>
+                      <span class="mark-text">未核实</span>
+                      <span class="mark-arrow" aria-hidden="true">⌄</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <pre class="code-line"><code>.device {
+  flex: 1;
+  min-width: auto; /* 默认值 */
+}</code></pre>
+          </article>
+
+          <article class="demo-case demo-case-good">
+            <div class="demo-case-heading">
+              <div>
+                <h2>允许收缩</h2>
+                <p>设备区域让出空间，按钮始终留在卡片内</p>
+              </div>
+              <span class="badge">正常收缩</span>
+            </div>
+
+            <div class="stage">
+              <span class="stage-label"
+                >将鼠标移入卡片，设备 ID 会自动省略</span
+              >
+              <div class="boundary" aria-hidden="true"></div>
+              <div class="alert-card force-hover">
+                <div class="alert-title">检测到一条需要核实的预警消息</div>
+                <div class="alert-footer">
+                  <div class="device">
+                    <span class="device-prefix">来自：</span>
+                    <span class="device-icon" aria-hidden="true">▣</span>
+                    <span class="device-name"> device-9f34b72a-prod </span>
+                    <span class="device-time">18:40:02</span>
+                  </div>
+                  <div class="mark-row">
+                    <span class="mark-button">
+                      <span aria-hidden="true">◷</span>
+                      <span class="mark-text">未核实</span>
+                      <span class="mark-arrow" aria-hidden="true">⌄</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <pre class="code-line"><code>.alert-footer,
+.device {
+  min-width: 0;
+}</code></pre>
+          </article>
+        </section>
+
+        <section class="explanation">
+          <article class="panel">
+            <p class="panel-kicker">How It Works</p>
+            <h2>浏览器实际经历了什么？</h2>
+            <div class="flow">
+              <div class="flow-step">
+                <span class="flow-number">01</span>
+                <strong>按钮需要更多宽度</strong>
+                <p>悬浮后，状态文字和箭头从折叠状态展开。</p>
+              </div>
+              <div class="flow-step">
+                <span class="flow-number">02</span>
+                <strong>左侧必须让出空间</strong>
+                <p><code>.mark-row</code> 不收缩，因此只能压缩设备区域。</p>
+              </div>
+              <div class="flow-step">
+                <span class="flow-number">03</span>
+                <strong>最小宽度决定结果</strong>
+                <p>
+                  <code>auto</code> 阻止继续收缩，<code>0</code>
+                  则允许文本省略。
+                </p>
+              </div>
+            </div>
+
+            <div class="formula">
+              <strong>关键点：</strong>
+              <code>flex: 1</code> 只表示元素愿意伸缩，并不会自动取消
+              <code>min-width: auto</code> 设置的“最小内容宽度”下限。
+            </div>
+          </article>
+
+          <aside class="panel">
+            <p class="panel-kicker">Checklist</p>
+            <h2>省略号生效的完整条件</h2>
+            <ul class="checklist">
+              <li>文本使用 <code>white-space: nowrap</code> 禁止换行。</li>
+              <li>文本使用 <code>overflow: hidden</code> 隐藏溢出。</li>
+              <li>
+                文本使用 <code>text-overflow: ellipsis</code> 显示省略号。
+              </li>
+              <li>
+                相关 Flex 父级使用 <code>min-width: 0</code>，真正允许变窄。
+              </li>
+            </ul>
+            <p class="summary">
+              遇到“长文本把兄弟元素挤出容器”的问题，应检查从外层 Flex
+              子项到文本容器的整条收缩链，而不只是文本本身。
+            </p>
+          </aside>
+        </section>
+
+        <nav class="case-end-nav" aria-label="案例末尾导航">
+          <div>
+            <span>已经理解这个现象？</span>
+            <strong>回到目录，继续积累下一个案例。</strong>
+          </div>
+          <a href="../../../">
+            返回案例目录
+            <span aria-hidden="true">→</span>
+          </a>
+        </nav>
+      </div>
+    </main>
+
+    <script type="module" src="./demo.js"></script>
+  </body>
+</html>

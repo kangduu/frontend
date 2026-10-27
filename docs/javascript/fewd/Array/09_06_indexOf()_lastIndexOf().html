@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> indexOf() lastIndexOf() 搜索</title>
+</head>
+<body>
+    <pre>
+        indexOf() 和 lastIndexOf() 搜索 整个数组中 具有给定值的元素，返回找到的第一个元素的索引 ，如果没有找到就返回-1。
+        
+        二者 的区别： indexOf()是 从头到尾（从左到右） 搜索； lastIndexOf() 则是 相反 （从右到左）。
+        
+        参数
+         参数一 ： 指定需要搜索的值；
+         参数二 ： （可选）指定数组中的一个索引，即从哪里开始。 如果为负数，则从 数组默认搜索顺序 相反顺序 开始
+    </pre>
+    <script>
+        /**
+         *  利用 indexOf 的 第二个参数 搜索 除了第一个以外 匹配的值
+         * */
+        function findAll(a, x) {
+            var re = [],
+                len = a.length,
+                pos = 1;                    //匹配的其实位置
+            while (pos < len) {
+                pos = a.indexOf(x, pos);
+                if (pos === -1) break;
+                re.push(pos);
+                pos += 1
+            }
+            return re;
+        }
+
+        var arr = [3, 2, 4, 5, 3, 5, 6, 3];
+        console.log(findAll(arr, 3));// [ 4, 7 ]
+    </script>
+</body>
+</html>

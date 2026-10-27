@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作用域</title>
+</head>
+<body>
+    
+    <h3>作用域精解</h3>
+    <pre>
+    1、[[scope]]:每个javascript函数都是一个对象，对象中有些属性我们可以访问，但有些不可以，这些属性仅供javascript引擎存取，[[scope]]就是其中一个
+    
+    2、[[scope]]指的就是我们所说的作用域,其中存储了运行期上下文的集合
+    
+    3、作用域链：[[scope]]中所存储的执行期上下文对象的集合，这个集合呈链式链接，我们把这种链式链接叫做作用域链
+    
+    4、运行期上下文:当函数执行时，会创建一个称为执行期上下文的内部对象。
+        一个执行期上下文定义了一个函数执行时的环境，函数每次执行时对应的执行上下文都是独一无二的，所以多次调用一个函数会导致创建多个执行上下文，当函数执行完毕，执行上下文被销毁
+    
+    5、查找变量：从作用域链的顶端依次向下查找。
+    </pre>
+    <script>
+        var fn1 = 'ivan';
+        var name = 'good';
+        var fn1 = function (y) {
+            y();
+        }
+
+        function fn1(x) {
+            x(name);
+        }
+
+        function fn2(x) {
+            //var name; //undefined
+            console.log(x);//good 错误，应该是 undefined
+            console.log(name);//undefined
+            var name = 'hello';
+            console.log(name);//hello
+        }
+
+        fn1(fn2);
+        /*
+        * GO
+        *   fn1 () {}
+        *   fn2 () {}
+        *   var fn1 :ivan
+        *   var name :good
+        *   fn1 :function(y)
+        * fn1 doing
+        *   AO
+        *       fn2(name)
+        *     dingyi  fn2
+        *       var name :undefined
+        *     doing fn2
+        * */
+    </script>
+
+</body>
+</html>

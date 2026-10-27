@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>concat() 添加参数元素(拼接新的元素)</title>
+</head>
+<body>
+    <pre>
+        创建并返回一个新数组。元素包括调用concat()的原始数组的元素和concat()的每个参数。
+        
+     注意：如果这些参数中的如何一个自身都是一维数组，则连接的是数组的元素，而非数组本身。
+        
+            var a = [1,23,4,5];
+            var res = a.concat(6,7,[8,2,[3,44]]);
+            console.log(a);//[ 1, 23, 4, 5 ]
+            console.log(res);//[ 1, 23, 4, 5, 6, 7, 8, 2, [ 3, 44 ] ] //不会递归扁平化数组的数组
+        
+    注意： 参数是数组也可以
+        
+        var arr = [2,3];
+        var arr1 = [4,5];
+        var res = arr.concat(arr1,6,'abd',null,undefined,true,false);
+        console.log(res); // [ 2, 3, 4, 5, 6, 'abd', null, undefined, true, false ]
+
+    </pre>
+    <script>
+    </script>
+</body>
+</html>

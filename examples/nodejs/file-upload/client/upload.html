@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+  <head>
+    <title>文件上传 Demo</title>
+  </head>
+  <body>
+    <input type="file" id="fileInput" />
+    <button onclick="uploadFile()">上传</button>
+    <br />
+    <progress id="progress" value="0" max="100"></progress>
+    <br />
+    <button onclick="getFileList()">获取文件列表</button>
+    <ul id="fileList"></ul>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
+    <script>
+      const CHUNK_SIZE = 2 * 1024 * 1024; // 2MB
+      let file = null;
+
+      document.getElementById("fileInput").addEventListener("change", (e) => {
+        file = e.target.files[0];
+      });
+
+      async function uploadFile() {
+        if (!file) return;
+
+        // 计算文件 hash（使用 SparkMD5）
+        const fileHash = await calculateHash(file);
+        const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+
+        // 1. 向服务器验证
+        const verifyRes = await fetch("http://localhost:3000/api/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fileHash, fileName: file.name, totalChunks }),
+        });
+        const verifyData = await verifyRes.json();
+
+        if (!verifyData.shouldUpload) {
+          alert("文件已存在（秒传）");
+          return;
+        }
+
+        const uploadedChunks = verifyData.uploadedChunks; // 已上传的分片索引
+
+        // 2. 分片上传
+        let uploadedCount = 0;
+        for (let i = 0; i < totalChunks; i++) {
+          if (uploadedChunks.includes(i)) {
+            uploadedCount++;
+            continue; // 跳过已上传分片
+          }
+
+          const start = i * CHUNK_SIZE;
+          const end = Math.min(start + CHUNK_SIZE, file.size);
+          const chunk = file.slice(start, end);
+
+          const formData = new FormData();
+          formData.append("chunk", chunk);
+          formData.append("fileHash", fileHash);
+          formData.append("chunkIndex", i);
+          formData.append("totalChunks", totalChunks);
+          formData.append("fileName", file.name);
+
+          // 上传分片（可加入并发控制，这里简单串行）
+          const uploadRes = await fetch("http://localhost:3000/api/upload", {
+            method: "POST",
+            body: formData,
+          });
+          const uploadData = await uploadRes.json();
+          if (uploadData.uploaded) {
+            uploadedCount++;
+            const percent = Math.round((uploadedCount / totalChunks) * 100);
+            document.getElementById("progress").value = percent;
+            console.log(`分片 ${i} 上传成功，进度 ${percent}%`);
+          } else {
+            console.error(`分片 ${i} 上传失败`);
+          }
+        }
+
+        // 3. 所有分片上传完成后，通知合并（接口内部已自动合并，也可手动触发合并）
+        if (uploadedCount === totalChunks) {
+          // 如果服务器没有自动合并，可以调用 /api/merge
+          await fetch("http://localhost:3000/api/merge", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              fileHash,
+              fileName: file.name,
+              totalChunks,
+            }),
+          });
+          alert("上传完成");
+        }
+      }
+
+      // 计算文件 hash（增量计算）
+      function calculateHash(file) {
+        return new Promise((resolve, reject) => {
+          const chunkSize = 2 * 1024 * 1024; // 2MB
+          const chunks = Math.ceil(file.size / chunkSize);
+          let currentChunk = 0;
+          const spark = new SparkMD5.ArrayBuffer();
+          const fileReader = new FileReader();
+
+          fileReader.onload = (e) => {
+            spark.append(e.target.result);
+            currentChunk++;
+            if (currentChunk < chunks) {
+              loadNext();
+            } else {
+              resolve(spark.end());
+            }
+          };
+
+          fileReader.onerror = reject;
+
+          function loadNext() {
+            const start = currentChunk * chunkSize;
+            const end = Math.min(start + chunkSize, file.size);
+            const chunk = file.slice(start, end);
+            fileReader.readAsArrayBuffer(chunk);
+          }
+
+          loadNext();
+        });
+      }
+
+      // 下载文件
+      async function downloadFile(fileName) {
+        try {
+          const res = await fetch(
+            `http://localhost:3000/api/download?fileName=${fileName}`,
+          );
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = fileName;
+          a.click();
+          URL.revokeObjectURL(url);
+        } catch (error) {
+          console.error(error);
+          alert("下载失败");
+        }
+      }
+
+      // 获取文件列表
+      async function getFileList() {
+        const fileListRes = await fetch("http://localhost:3000/api/fileList");
+        const fileListData = await fileListRes.json();
+        console.log(fileListData);
+        document.getElementById("fileList").innerHTML = fileListData.fileList
+          .map(
+            (file) =>
+              `<li>${file} <button onclick="downloadFile('${file}')">下载</button></li>`,
+          )
+          .join("");
+      }
+    </script>
+  </body>
+</html>

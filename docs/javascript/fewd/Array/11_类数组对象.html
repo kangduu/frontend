@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类数组对象</title>
+</head>
+<body>
+    <pre>
+        数组和其他对象的区别：
+        1、当有新的元素添加到列表中，自动更新length值
+        2、设置length为一个较小的值将截取数组 ，length = 0 可置空数组
+        3、从Array.prototype中继承一些有用的方法
+        4、其类属性为‘Array’
+    </pre>
+    <script>
+        /**
+         *  一个常规对象 变成 类数组对象
+         * */
+        var obj = {};
+        //添加一些属性，称为类数组
+        var i = 0;
+        while (i < 5) {
+            obj[i] = i * i;
+            i++
+        }
+        obj.length = i;
+        console.log(obj);//{ '0': 0, '1': 1, '2': 4, '3': 9, '4': 16, length: 5 }
+
+        //当作真正的数组遍历
+        var total = 0;
+        for (var j = 0; j < obj.length; j++) {
+            total += obj[j]
+        }
+        console.log(total);// 30
+
+        /**
+         *  检测类数组 对象
+         * */
+        function isArrayLike(o) {
+            if (o &&                                    //o非null 、 undefined等
+                typeof o === 'object' &&                //o是对象
+                isFinite(o.length) &&                   //o.length是有限的
+                o.length >= 0 &&                        //o.length是非负数
+                o.length === Math.floor(o.length) &&    //o.length是整数
+                o.length < (2 ^ 32))                    //o.length < 2^32
+                return true;
+            else
+                return false
+        }
+
+        console.log(isArrayLike(obj)); // true
+
+
+        /**
+         *  对象间接 调用数组方法
+         * */
+        console.log(Array.prototype.join.call(obj, '-')); //0-1-4-9-16
+        Array.prototype.forEach.call(obj, function (v) {
+            console.log(v) // 0 1 4 9 16
+        });
+
+        //特列 concat()
+        console.log(Array.prototype.concat.call(obj, 666));//[ { '0': 0, '1': 1, '2': 4, '3': 9, '4': 16, length: 5 }, 666 ]
+
+        // 兼容性 写法  主要是 Firefox
+        Array.join = Array.join || function (a, sep) {
+            return Array.prototype.join.call(a, sep)
+        };
+        console.log(Array.join(obj, '--'));// 0--1--4--9--16
+        //如果不写 Array.join 方法 只能在Firefox中调用 Array.join方法
+    </script>
+</body>
+</html>

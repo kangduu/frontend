@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>splice() 增删通用</title>
+</head>
+<body>
+    <pre>
+        能够从数组中删除元素、插入元素到数组中或者同时完成这两步操作。
+        
+        参数：
+         第一个： 删除的起始位置
+         第二个：删除元素个数 ， 不填则从起始位置全部删除
+         之后的任意个：添加的元素
+
+        会修改原数组
+    </pre>
+    <script>
+        var arr = [1,2,3,4,5];
+        var result1 = arr.splice(3,2,6,7);
+        console.log(arr);//[ 1, 2, 3, 6, 7 ]
+        console.log(result1);//[ 4, 5 ]
+
+        var result2 = arr.splice(1,2,[6,7]);
+        console.log(arr);//[ 1, [ 6, 7 ], 6, 7 ]
+        console.log(result2);//[ 2, 3 ]
+
+        var arr1 = [2,3,4,5,5];
+        var re = arr1.splice(2);
+        console.log(re);//[ 4, 5, 5 ]
+
+
+    </script>
+</body>
+</html>

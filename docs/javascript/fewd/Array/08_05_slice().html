@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>slice() 截取 部分</title>
+</head>
+<body>
+    <pre>
+        返回指定数组的一个片段或子数组。两个参数开头和结束。
+        
+        返回的数组： 第一个 参数指定的位置 和 所有到但不包括 第二个 参数指定的位置 之间 的所有数组元素  [a,b)
+        
+        注意：如果是负数，表示 相对于数组中最后一个元素的位置。
+
+    </pre>
+    <script>
+        var arr = [2,3,4,5,6,7];
+        var result = arr.slice(3,5);
+        console.log(result);//[ 5, 6 ]
+
+        var result1= arr.slice(-5,-1);
+        console.log(result1);//[ 3, 4, 5, 6 ]   注意  始终是按原数组顺序截取 ，索引只能从小到大
+
+        console.log(arr);//[ 2, 3, 4, 5, 6, 7 ] 不修改原数组
+    </script>
+</body>
+</html>

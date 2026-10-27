@@ -1,0 +1,53 @@
+@nav-height: 48px;
+
+.header {
+    width: 100%;
+    height: @nav-height;
+    background-color: #969696;
+
+    .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .navbar {
+        display: flex;
+        flex: 1;
+
+        .item {
+            line-height: @nav-height;
+            font-weight: 900;
+            color: #fff;
+            margin-right: 20px;
+            cursor: pointer;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            &:last-of-type {
+                margin-right: 0;
+            }
+
+            &:nth-of-type(2),
+            &:nth-of-type(3),
+            &:nth-of-type(4),
+            &:nth-of-type(5) {
+                font-style: italic;
+            }
+        }
+    }
+
+    .feature .discount {
+        width: 100%;
+        line-height: 30px;
+        text-align: center;
+        color: #d7d7d7;
+        border-bottom: 1px solid #969696;
+        background-color: #222;
+
+        >span {
+            margin-right: 1em;
+        }
+    }
+}

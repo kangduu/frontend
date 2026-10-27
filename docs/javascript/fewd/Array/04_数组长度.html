@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数组长度</title>
+</head>
+<body>
+  <script>
+    /**
+     * 数组的 length 属性 变为只读
+     * */
+    let arr = [1,3,4,2];
+    console.log(arr.length); // 4
+    
+    Object.defineProperty(arr,'length',{writable:false});
+    
+    //改变长度
+    arr.length = 0;
+    console.log(arr.length)  //4
+  </script>
+</body>
+</html>

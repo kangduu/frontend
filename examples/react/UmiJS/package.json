@@ -1,0 +1,62 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "umi dev",
+    "start:umi-ui": "set UMI_UI=1 && umi dev",
+    "build": "umi build",
+    "postinstall": "umi generate tmp",
+    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "dependencies": {
+    "@ant-design/charts": "^0.9.4",
+    "@ant-design/icons": "^4.0.2",
+    "@ant-design/pro-layout": "^6.5.0",
+    "@antv/data-set": "^0.11.0",
+    "@antv/l7": "^2.3.7",
+    "@antv/l7-maps": "^2.3.7",
+    "@antv/l7-react": "^2.1.9",
+    "antd": "^4.0.0",
+    "bizcharts": "^3.5.3-beta.0",
+    "bizcharts-plugin-slider": "^2.1.1-beta.1",
+    "classnames": "^2.2.6",
+    "gg-editor": "^2.0.2",
+    "moment": "^2.24.0",
+    "numeral": "^2.0.6",
+    "react": "17.x",
+    "react-dom": "17.x",
+    "react-fittext": "^1.0.0",
+    "react-router": "^4.3.1",
+    "umi": "^3.5.8"
+  },
+  "devDependencies": {
+    "@types/mockjs": "^1.0.4",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/redux-logger": "^3.0.9",
+    "@umijs/preset-react": "1.x",
+    "@umijs/preset-ui": "^2.2.9",
+    "@umijs/test": "^3.5.8",
+    "lint-staged": "^10.0.7",
+    "mockjs": "^1.1.0",
+    "prettier": "^2.2.0",
+    "redux-logger": "^3.0.6",
+    "typescript": "^4.1.2",
+    "yorkie": "^2.0.0"
+  },
+  "@@/*": [
+    "src/.umi/*"
+  ]
+}

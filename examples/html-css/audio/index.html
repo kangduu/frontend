@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="audio"></div>
+    <div id="results"></div>
+
+    <script>
+      //1. 混合所有声道数据（如果是立体声）
+      //2. 将音频分成多个时间窗口（默认每个窗口0.1秒）
+      //3. 计算每个窗口的RMS能量值
+      //4. 根据RMS阈值检测有声/静音段落
+      //5. 应用持续时间阈值过滤无效段落
+      //6. 返回符合条件的有声段落时间信息
+
+      // 检测音频片段
+      async function detectAudioSegments(file, options = {}) {
+        // 默认参数
+        const {
+          rmsThreshold = 0.005, // RMS能量阈值，调高此值可减少噪音误判
+          minSilenceDuration = 0.5, // 最小静音持续时间(秒)，静音至少持续0.5秒才分段
+          minSegmentDuration = 0.1, // 最小有效段落持续时间(秒)， 有效段落至少0.1秒
+          windowSize = 0.05, // RMS分析窗口大小(秒)， 分析窗口50ms
+        } = options;
+
+        try {
+          // 1. 读取并解码音频文件
+          const arrayBuffer = await readFileAsArrayBuffer(file);
+          const audioContext = new (window.AudioContext ||
+            window.webkitAudioContext)();
+          const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+          // 2. 获取音频数据（混合所有声道）
+          const mixedChannelData = mixDownChannels(audioBuffer);
+          const sampleRate = audioBuffer.sampleRate;
+
+          // 3. 计算RMS能量
+          const { rmsValues, samplesPerWindow } = calculateRMSValues(
+            mixedChannelData,
+            sampleRate,
+            windowSize
+          );
+
+          // 4. 检测音频段落
+          const segments = findSegmentsFromRMS(
+            rmsValues,
+            samplesPerWindow,
+            sampleRate,
+            rmsThreshold,
+            minSilenceDuration,
+            minSegmentDuration
+          );
+
+          return {
+            segments,
+            duration: audioBuffer.duration,
+            sampleRate,
+            sampleCount: mixedChannelData.length,
+          };
+        } catch (error) {
+          console.error("分析音频失败:", error);
+          throw error;
+        }
+      }
+
+      // 辅助函数：混合所有声道
+      function mixDownChannels(audioBuffer) {
+        if (audioBuffer.numberOfChannels === 1) {
+          return audioBuffer.getChannelData(0);
+        }
+
+        const leftChannel = audioBuffer.getChannelData(0);
+        const rightChannel = audioBuffer.getChannelData(1);
+        const mixed = new Float32Array(leftChannel.length);
+
+        for (let i = 0; i < leftChannel.length; i++) {
+          mixed[i] = (leftChannel[i] + rightChannel[i]) / 2;
+        }
+
+        return mixed;
+      }
+
+      // 辅助函数：计算RMS能量
+      function calculateRMSValues(channelData, sampleRate, windowSize) {
+        const samplesPerWindow = Math.floor(sampleRate * windowSize);
+        const windowCount = Math.floor(channelData.length / samplesPerWindow);
+        const rmsValues = new Float32Array(windowCount);
+
+        for (let i = 0; i < windowCount; i++) {
+          const startSample = i * samplesPerWindow;
+          const endSample = startSample + samplesPerWindow;
+          let sum = 0;
+
+          for (let j = startSample; j < endSample; j++) {
+            sum += channelData[j] * channelData[j];
+          }
+
+          rmsValues[i] = Math.sqrt(sum / samplesPerWindow);
+        }
+
+        return { rmsValues, samplesPerWindow };
+      }
+
+      // 辅助函数：从RMS值检测段落
+      function findSegmentsFromRMS(
+        rmsValues,
+        samplesPerWindow,
+        sampleRate,
+        rmsThreshold,
+        minSilenceDuration,
+        minSegmentDuration
+      ) {
+        const minSilenceWindows = Math.ceil(
+          minSilenceDuration / (samplesPerWindow / sampleRate)
+        );
+        const minSegmentWindows = Math.ceil(
+          minSegmentDuration / (samplesPerWindow / sampleRate)
+        );
+
+        const segments = [];
+        let currentSegment = null;
+        let silentWindowCount = 0;
+
+        for (let i = 0; i < rmsValues.length; i++) {
+          const isActive = rmsValues[i] > rmsThreshold;
+
+          if (isActive) {
+            silentWindowCount = 0;
+
+            if (!currentSegment) {
+              // 开始新段落
+              currentSegment = {
+                startWindow: i,
+                endWindow: i,
+                startTime: (i * samplesPerWindow) / sampleRate,
+                endTime: (i * samplesPerWindow + samplesPerWindow) / sampleRate,
+              };
+            } else {
+              // 更新当前段落
+              currentSegment.endWindow = i;
+              currentSegment.endTime =
+                (i * samplesPerWindow + samplesPerWindow) / sampleRate;
+            }
+          } else {
+            silentWindowCount++;
+
+            if (currentSegment && silentWindowCount >= minSilenceWindows) {
+              // 检查段落持续时间是否足够长
+              const segmentDuration =
+                currentSegment.endTime - currentSegment.startTime;
+              if (segmentDuration >= minSegmentDuration) {
+                segments.push({
+                  start: currentSegment.startTime,
+                  end: currentSegment.endTime,
+                  duration: segmentDuration,
+                });
+              }
+
+              currentSegment = null;
+            }
+          }
+        }
+
+        // 添加最后一个段落（如果有）
+        if (currentSegment) {
+          const segmentDuration =
+            currentSegment.endTime - currentSegment.startTime;
+          if (segmentDuration >= minSegmentDuration) {
+            segments.push({
+              start: currentSegment.startTime,
+              end: currentSegment.endTime,
+              duration: segmentDuration,
+            });
+          }
+        }
+
+        return segments;
+      }
+
+      // 文件读取辅助函数
+      function readFileAsArrayBuffer(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsArrayBuffer(file);
+        });
+      }
+
+      // 点击播放
+      function play(start, duration) {
+        const audio = document.getElementById("audio");
+        if (audio) {
+          audio.pause();
+          audio.currentTime = start;
+          audio.play();
+
+          setTimeout(() => {
+            audio.pause();
+          }, duration * 1000);
+        }
+      }
+
+      // 展示结果
+      function displayResults(result) {
+        const resultsDiv = document.getElementById("results");
+
+        resultsDiv.innerHTML = `
+          <h3>音频段落检测结果</h3>
+          <p>总时长: ${result.duration.toFixed(2)}秒</p>
+          <p>采样率: ${result.sampleRate}Hz</p>
+          <p>样本数: ${result.sampleCount}</p>
+          <p>检测到 ${result.segments.length} 个有声段落:</p>
+          <ul>
+            ${result.segments
+              .map(
+                (seg, i) => `
+              <li onclick="play(${seg.start},${
+                  seg.duration
+                })" style="margin-bottom: 12px; cursor:pointer;">
+                #${i + 1}:
+                从 ${seg.start.toFixed(2)}秒 到 ${seg.end.toFixed(2)}秒
+                (时长: ${seg.duration.toFixed(2)}秒)
+              </li>
+            `
+              )
+              .join("")}
+          </ul>
+        `;
+      }
+
+      function createAudioElement(file) {
+        const url = URL.createObjectURL(file);
+        const audio = document.createElement("audio");
+        audio.src = url;
+        audio.setAttribute("controls", true);
+        document.getElementById("audio").appendChild(audio);
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+        }, 1000);
+      }
+
+      function start() {
+        import("./test.mp3")
+          .then((response) => response.blob())
+          .then(async (blob) => {
+            const file = new File([blob], "test.ma3");
+            createAudioElement(file);
+            try {
+              // 调用分析函数，可调整参数
+              const result = await detectAudioSegments(file);
+              console.log("检测到的音频段落:", result.segments);
+              displayResults(result);
+            } catch (error) {
+              console.error("处理音频文件时出错:", error);
+            }
+          });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        start();
+      });
+    </script>
+  </body>
+</html>

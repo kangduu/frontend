@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Folder Upload</title>
+  </head>
+  <body>
+    <h3>Folder Upload</h3>
+
+    <form enctype="multipart/form-data">
+      <input type="file" name="folder" directory multiple webkitdirectory />
+      <button type="submit">上传</button>
+    </form>
+
+    <script>
+      const form = document.querySelector("form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        console.log(formData.getAll("folder"));
+        // const res = await fetch("http://localhost:3000/api/folder-upload", {
+        //   method: "POST",
+        //   body: formData,
+        // });
+        // const data = await res.json();
+      });
+    </script>
+  </body>
+</html>

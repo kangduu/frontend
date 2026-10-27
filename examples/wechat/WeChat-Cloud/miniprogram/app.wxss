@@ -1,0 +1,6 @@
+/**app.wxss**/
+.container {
+  padding: 10px;
+  box-sizing: border-box;
+  min-height: 100vh;
+}

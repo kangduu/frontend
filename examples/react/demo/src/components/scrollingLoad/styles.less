@@ -1,0 +1,39 @@
+.scrolling {
+    width: 300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.container {
+    width: 300px;
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: auto;
+    border: 1px solid #000;
+    margin: 0 auto;
+    position: relative;
+
+    li {
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        background-color: #efe;
+        margin-bottom: 10px;
+    }
+}
+
+.load {
+    width: 300px;
+    height: 400px;
+    line-height: 400px;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+}

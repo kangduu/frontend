@@ -1,0 +1,109 @@
+// utils 工具 （直接在标签上添加对应类接口）
+// 这里主要是和UI沟通，能够有一套产品的设计规范，如： 字体大小有多少种、margin和padding有多少类型、按钮交互颜色（包括禁用按钮什么样子的）
+@import './varibles.scss';
+
+// 颜色
+.bg-red {
+    background-color: $color-theme-red !important;
+}
+
+.text-black {
+    color: #000;
+}
+
+
+// 字体
+.f10 {
+    font-size: 10px;
+}
+
+.f12 {
+    font-size: 12px;
+}
+
+// 文字对齐
+.tl {
+    text-align: left;
+}
+
+.tc {
+    text-align: center;
+}
+
+.tr {
+    text-align: right;
+}
+
+// 浮动与清除浮动
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.fix {
+    *zoom: 1;
+}
+
+.fix:after {
+    display: table;
+    content: '';
+    clear  : both;
+}
+
+// 显示
+.dn {
+    display: none;
+}
+//...
+.dt {
+    display: table;
+}
+
+div.dib {
+    *display: inline;
+    *zoom   : 1;
+}
+
+.vm {
+    vertical-align: middle;
+}
+
+.vib {
+    display       : inline-block;
+    vertical-align: middle;
+}
+
+// 定位
+.pr {
+    position: relative;
+}
+
+// 盒子模型
+.ml4 {
+    margin-left: 4px;
+}
+
+.mr4 {
+    margin-right: 4px;
+}
+
+.mt4 {
+    margin-top: 4px;
+}
+
+.mb4 {
+    margin-bottom: 4px;
+}
+
+// 按钮禁用
+.disabled {
+    outline           : 0 none;
+    cursor            : default !important;
+    opacity           : .4;
+    filter            : alpha(opacity=40);
+    -ms-pointer-events: none;
+    pointer-events    : none;
+}

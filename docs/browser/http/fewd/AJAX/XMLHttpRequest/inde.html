@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XMLHttpRequest</title>
+  </head>
+
+  <body>
+    <div>
+      <h2>
+        <a
+          href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest"
+          target="_blank"
+        >
+          XMLHttpRequest
+        </a>
+      </h2>
+      <form action="#">
+        <div style="margin-bottom: 10px">
+          <label for="username">*用户名（GitHub）：</label>
+          <input type="text" id="username" autocomplete="off" />
+        </div>
+        <button id="xhr-btn-start" type="button">
+          使用XMLHttpRequest获取GitHub用户信息
+        </button>
+      </form>
+
+      <div id="container"></div>
+    </div>
+
+    <script type="module">
+      import createXHR from "../../utils/xhr.js";
+      import { GitHub_User_Url } from "../../utils/getUserGithub.js";
+
+      function renderUser(data) {
+        var name_el = document.createElement("h3");
+        name_el.innerText = data.name || data.login;
+
+        var img_el = document.createElement("img");
+        img_el.src = data.avatar_url;
+        img_el.alt = "用户头像";
+        img_el.style.display = "block";
+        img_el.style.width = "80px";
+
+        var link_el = document.createElement("a");
+        link_el.href = data.html_url;
+        link_el.target = "_blank";
+        link_el.innerText = "跳转至GitHub";
+
+        var user_el = document.createElement("div");
+        user_el.appendChild(name_el);
+        user_el.appendChild(img_el);
+        user_el.appendChild(link_el);
+
+        return user_el;
+      }
+
+      function renderUserList(data) {
+        var lists = Object.entries(data);
+        if (lists.length > 0) {
+          var ul = document.createElement("ul");
+
+          function createElementLI([key, value]) {
+            if (value) {
+              var li = document.createElement("li");
+              li.innerHTML = `${key}：${value}`;
+              return li;
+            }
+            return null;
+          }
+
+          lists.forEach((item) => {
+            var ele_li = createElementLI(item);
+            ele_li && ul.appendChild(ele_li);
+          });
+
+          return ul;
+        }
+
+        return null;
+      }
+
+      function renderHTML(data) {
+        var container = document.getElementById("container");
+        if (container) {
+          var baseInfoElement = renderUser(data);
+          var userListElement = renderUserList(data);
+          if (userListElement) baseInfoElement.appendChild(userListElement);
+
+          var firstChild = container.firstChild;
+          container.insertBefore(baseInfoElement, firstChild);
+        }
+      }
+
+      function getUserName() {
+        var input_username = document.getElementById("username");
+        if (input_username) {
+          var name = input_username.value;
+          return name;
+        }
+
+        return "";
+      }
+
+      function handleQuery() {
+        var username = getUserName();
+        if (username === "" || username == undefined) {
+          alert("请输入用户名");
+          return;
+        }
+
+        var url = `${GitHub_User_Url}${username}`;
+        var xhr = createXHR();
+
+        if (xhr) {
+          xhr.onreadystatechange = function () {
+            console.log("xhr status upated : ", xhr.readyState);
+
+            try {
+              if (xhr.readyState === XMLHttpRequest.DONE /* 4 */) {
+                if (xhr.status === 200) {
+                  var data = JSON.parse(xhr.responseText);
+                  renderHTML(data);
+                } else {
+                  console.log("There was a problem with the request.");
+                }
+              }
+            } catch (e) {
+              console.log("Caught Exception:" + e);
+            }
+          };
+
+          xhr.open("GET", url);
+
+          xhr.send();
+        }
+      }
+
+      document.onkeydown = function (params) {
+        if (params.keyCode == 13) handleQuery();
+      };
+
+      document
+        .getElementById("xhr-btn-start")
+        .addEventListener("click", handleQuery, false);
+    </script>
+  </body>
+</html>

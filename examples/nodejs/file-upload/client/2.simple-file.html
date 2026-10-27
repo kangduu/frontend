@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form 表单上传</title>
+  </head>
+  <body>
+    <h3>表单上传（不跳转页面）</h3>
+
+    <form id="uploadForm" enctype="multipart/form-data">
+      <!-- name 要和后端 array("files") 对应；multiple 表示可多选 -->
+      <input type="file" name="files" multiple />
+      <button type="submit">上传</button>
+    </form>
+
+    <pre id="result"></pre>
+
+    <script>
+      const form = document.getElementById("uploadForm");
+      const resultEl = document.getElementById("result");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault(); // 阻止浏览器默认提交（防止页面跳转）
+
+        const formData = new FormData(form); // 从表单中自动收集所有字段（包括文件），构造 multipart/form-data 请求。
+
+        // 简单校验：是否选择了文件
+        const files = formData.getAll("files");
+        if (!files || files.length === 0 || !files[0] || files[0].size === 0) {
+          alert("请先选择文件");
+          return;
+        }
+        
+        try {
+          const res = await fetch("http://localhost:3000/api/simple-upload", {
+            method: "POST",
+            body: formData, // 直接传 FormData，浏览器会自动设置 multipart/form-data
+          });
+
+          if (!res.ok) {
+            throw new Error("上传失败，状态码：" + res.status);
+          }
+
+          const data = await res.json();
+
+          // 在页面上展示返回结果
+          resultEl.textContent =
+            "上传成功，服务器返回：\n" + JSON.stringify(data, null, 2);
+        } catch (err) {
+          console.error(err);
+          resultEl.textContent = "上传出错:\n" + err.message;
+        }
+      });
+    </script>
+  </body>
+</html>

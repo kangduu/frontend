@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用CSS绘制三角形【border】</title>
+
+    <style>
+        div {
+            display: inline-block;
+        }
+
+        .default {
+            width: 0;
+            height: 0;
+            border-top: 50px solid yellowgreen;
+            border-bottom: 50px solid black;
+            border-left: 50px solid orange;
+            border-right: 50px solid red;
+        }
+
+        .up {
+            width: 0;
+            height: 0;
+            border: 50px solid transparent;
+            border-bottom: 50px solid black;
+        }
+
+        .bottom {
+            width: 0;
+            height: 0;
+            border: 50px solid transparent;
+            border-top: 50px solid black;
+        }
+
+        .right {
+            width: 0;
+            height: 0;
+            border: 50px solid transparent;
+            border-right: 50px solid black;
+        }
+
+        .left {
+            width: 0;
+            height: 0;
+            border: 50px solid transparent;
+            border-left: 50px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="triangle-draw__border">
+        <h1>使用CSS绘制三角形【border】</h1>
+        <p>基本原理：利用宽高都为零及透明的border实现。</p>
+        <div class="default"></div>
+        <div class="up"></div>
+        <div class="left"></div>
+        <div class="bottom"></div>
+        <div class="right"></div>
+    </div>
+</body>
+
+</html>

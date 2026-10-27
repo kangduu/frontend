@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> forEach() 遍历 </title>
+</head>
+<body>
+    <pre>
+        从头到尾遍历数组，为每个元素调用指定的函数。
+        
+        Array.forEach( function (value,index,array) { // 函数接受三个参数，数组元素 元素的索引 数组本身
+            statement
+        } ，thisValue);//第二个参数是 调用回调函数的 this
+        
+        注意：forEach() 无法在所有元素都传递给调用的函数之前 终止 遍历。 不能用break 会报错，只能使用 try catch 语句
+        注意: forEach() 对于 空数组 是不会执行回调函数的。
+    </pre>
+    <script>
+        //不会修改原数组
+        
+        var a2 = [2, 3, 4, 5, 6];
+        var sum1 = 0;
+        a2.forEach(function (v,i,a) {
+            sum1 += v;
+            a[i] = v + 2 //函数中对原数组进行了操作
+        });
+        console.log(sum1);// 20
+        console.log(a2);//[ 4, 5, 6, 7, 8 ]
+        
+        
+        /**
+         *  数组元素和
+         * */
+        var a1 = [2, 3, 4, 5, 6];
+        var sum = 0;
+        a1.forEach(function (v) {
+            sum += v
+        });
+        console.log(sum);// 20
+        /**
+         * 对每个元素 操作 加 1
+         * */
+        a1.forEach(function (v, i, a) {
+            a[i] = v + 1
+        });
+        console.log(a1); // [ 3, 4, 5, 6, 7 ]
+
+        /**
+         *  利用 try_catch 语句 终止 forEach 遍历
+         * */
+        var arr = [1, 2, 3, 4];
+        try {
+            arr.forEach(function (v) {
+                if (v === 3) throw new Error('exist');
+                else console.log(v)
+            })
+        } catch (e) {
+            if (e.message == 'exist') console.log('ending');
+            else console.log(e.message)
+        }
+
+        /**
+         *  利用 return  | return false 跳出本次遍历
+         * */
+        var a = ['a', 'b', 'c'];
+        a.forEach(function (v, i, a) {
+            if (a[i] === 'b') return;  // | return false;
+            console.log(v) // a c
+        });
+        console.log(a); // [ 'a', 'b', 'c' ]
+    </script>
+</body>
+</html>
