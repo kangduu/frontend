@@ -12,6 +12,6 @@
     "vitepress": "^1.6.4"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   }
 }
