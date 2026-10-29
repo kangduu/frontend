@@ -55,15 +55,82 @@ function section(folder: string): SidebarItem[] {
   return [{ text: '概览', link: `/${folder}/` }, ...walk(path.join(docsRoot, folder), `/${folder}`)]
 }
 
+const base = '/frontend/'
+
 export default defineConfig({
   lang: 'zh-CN',
   title: 'Frontend',
   description: 'Web 前端知识库',
-  base: '/frontend/',
+  base,
+  head: [
+    ['link', { rel: 'icon', href: `${base}favicon.ico` }],
+    ['meta', { name: 'author', content: 'kangduu' }],
+  ],
+  lastUpdated: true,
   ignoreDeadLinks: true,
+  sitemap: {
+    hostname: 'https://kangduu.github.io/frontend/',
+  },
+  markdown: {
+    image: { lazyLoading: true },
+    container: {
+      tipLabel: '提示',
+      warningLabel: '注意',
+      dangerLabel: '警告',
+      infoLabel: '信息',
+      detailsLabel: '详情',
+      importantLabel: '重要',
+      cautionLabel: '警告',
+      noteLabel: '注',
+    },
+  },
   themeConfig: {
-    search: { provider: 'local' },
-    outline: { label: '本页目录' },
+    logo: '/logo.png',
+    search: {
+      provider: 'local',
+      options: {
+        translations: {
+          button: {
+            buttonText: '搜索',
+            buttonAriaLabel: '搜索',
+          },
+          modal: {
+            noResultsText: '无法找到相关结果',
+            resetButtonTitle: '清除查询条件',
+            backButtonTitle: '返回',
+            displayDetails: '显示详细列表',
+            footer: {
+              selectText: '选择',
+              navigateText: '切换',
+              closeText: '关闭',
+            },
+          },
+        },
+      },
+    },
+    outline: { label: '此页内容' },
+    lastUpdated: { text: '上次编辑于' },
+    docFooter: { prev: '上一页', next: '下一页' },
+    editLink: {
+      pattern: 'https://github.com/kangduu/frontend/edit/main/docs/:path',
+      text: '在 GitHub 上编辑此页',
+    },
+    socialLinks: [{ icon: 'github', link: 'https://github.com/kangduu/frontend' }],
+    footer: {
+      message: '路漫漫其修远兮，吾将上下而求索',
+    },
+    darkModeSwitchLabel: '外观',
+    lightModeSwitchTitle: '切换到浅色模式',
+    darkModeSwitchTitle: '切换到深色模式',
+    sidebarMenuLabel: '菜单',
+    returnToTopLabel: '回到顶部',
+    skipToContentLabel: '跳至主要内容',
+    notFound: {
+      title: '页面不存在',
+      quote: '路漫漫其修远兮，吾将上下而求索',
+      linkText: '返回首页',
+      linkLabel: '返回首页',
+    },
     nav: [
       { text: '总览', link: '/' },
       { text: 'HTML 与 CSS', link: '/html-css/' },
