@@ -5,6 +5,11 @@ import { fileURLToPath } from 'node:url'
 
 const docsRoot = fileURLToPath(new URL('..', import.meta.url))
 
+// .docx 不在 VitePress 默认识别的静态后缀里，站内链接会被改写成 .html
+const extraExts = new Set((process.env.VITE_EXTRA_EXTENSIONS ?? '').split(',').filter(Boolean))
+extraExts.add('docx')
+process.env.VITE_EXTRA_EXTENSIONS = [...extraExts].join(',')
+
 type SidebarItem = {
   text: string
   link?: string

@@ -8,6 +8,8 @@ source: "front-end-web-developer/JavaScript/README.md"
 
 ### window对象
 
+- [window对象【JavaScript高阶程序设计】](./BOM/window对象【JavaScript高阶程序设计】)（PDF、Word）
+
 ### location对象
 
 ### navigator对象

@@ -4,7 +4,7 @@
 
 - [Git](./git/README)
 - [算法](./algorithm/README)
-- [面试](./interview/README)
+- [面试](./interview/README)，另有 [字节前端面试题（第一期）](./interview/字节前端面试题（第一期）)
 - [性能](./performance/README)：回流、缓存、存储和 Webpack 性能的篇目也从浏览器、构建分类链进来
 - [安全](./security/README)
 - [可视化](./visualization/README)

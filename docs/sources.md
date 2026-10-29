@@ -89,6 +89,8 @@
 | `docs/appendix/interview/README.md` | `camp/src/interview/README.md` | |
 | `docs/appendix/interview/Vue.md` | `camp/src/interview/Vue.md` | |
 | `docs/appendix/interview/编程题.md` | `camp/src/interview/编程题.md` | |
+| `docs/appendix/interview/字节前端面试题（第一期）.md` | `front-end-web-developer/project/blog/字节前端面试题（第一期）.pdf` | 页面内链到 PDF |
+| `docs/public/appendix/interview/字节前端面试题（第一期）.pdf` | `front-end-web-developer/project/blog/字节前端面试题（第一期）.pdf` | |
 | `docs/appendix/nest/README.md` | `camp/src/nest/README.md` | |
 | `docs/appendix/blog/chat.md` | `camp/src/blog/chat.md` | |
 | `docs/appendix/blog/README.md` | `camp/src/blog/README.md` | |
@@ -188,6 +190,9 @@
 | `docs/javascript/fewd/JavaScript-Module.md` | `front-end-web-developer/JavaScript/JavaScript-Module.md` | |
 | `docs/javascript/fewd/README.md` | `front-end-web-developer/JavaScript/README.md` | |
 | `docs/javascript/fewd/Array/Array.prototype.map().md` | `front-end-web-developer/JavaScript/Array/Array.prototype.map().md` | |
+| `docs/javascript/fewd/BOM/window对象【JavaScript高阶程序设计】.md` | `front-end-web-developer/HTML-CSS/BOM/window对象【JavaScript高阶程序设计】.pdf` | 页面内链到 PDF 与 Word |
+| `docs/public/javascript/fewd/BOM/window对象【JavaScript高阶程序设计】.pdf` | `front-end-web-developer/HTML-CSS/BOM/window对象【JavaScript高阶程序设计】.pdf` | |
+| `docs/public/javascript/fewd/BOM/window对象【JavaScript高阶程序设计】.docx` | `front-end-web-developer/HTML-CSS/BOM/window对象【JavaScript高阶程序设计】.docx` | |
 | `docs/javascript/fewd/BOM/客户端存储/cookie.md` | `front-end-web-developer/JavaScript/BOM/客户端存储/cookie.md` | |
 | `docs/javascript/fewd/BOM/客户端存储/IndexedDB.md` | `front-end-web-developer/JavaScript/BOM/客户端存储/IndexedDB.md` | |
 | `docs/javascript/fewd/BOM/客户端存储/README.md` | `front-end-web-developer/JavaScript/BOM/客户端存储/README.md` | |
