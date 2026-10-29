@@ -15,6 +15,7 @@
 - [API 开发](./api-development)
 - [命令行](./cli)
 - [测试](./testing)
+- [Node.js 开发指南](./Node.js%20开发指南)（PDF）
 
 ## 案例与测试
 

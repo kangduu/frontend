@@ -266,6 +266,8 @@
 | `docs/appendix/notes/Template.md` | `front-end-web-developer/Template.md` | |
 | `docs/appendix/notes/Tools.md` | `front-end-web-developer/Tools.md` | |
 | `docs/nodejs/roadmap.md` | `nodejs/README.md` | |
+| `docs/nodejs/Node.js 开发指南.md` | `nodejs/docs/Node.js 开发指南.pdf` | 页面内链到 PDF |
+| `docs/public/nodejs/Node.js 开发指南.pdf` | `nodejs/docs/Node.js 开发指南.pdf` | |
 | `docs/typescript/roadmap.md` | `ts-practice/README.md` | |
 | `docs/html-css/css-lab.md` | `css/README.md` | |
 | `docs/engineering/readme.md` | `engineering/README.md` | |
